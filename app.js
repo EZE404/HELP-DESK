@@ -22,9 +22,18 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.locals.moment = require('moment');
 app.use(favicon(path.join(__dirname,'public','favicon.png')));
+
 // routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// 404
+app.get('*', function (req, res) {
+  res.status(404);
+  res.render('404');
+  //res.sendFile(path.join(__dirname + '/public/img/a23.jpg'));
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
