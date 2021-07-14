@@ -87,4 +87,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.log('Servidor levantado en ' + 'http://localhost:' + addr.port + '/');
 }
