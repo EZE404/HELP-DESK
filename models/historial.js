@@ -1,12 +1,15 @@
 'use strict';
 
+const { Sequelize } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   const Historial = sequelize.define('historial', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
-      field: 'id'
+      field: 'id',
+      autoIncrement: true
     },
     prioridad: {
       type: DataTypes.STRING,
@@ -22,6 +25,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       field: 'detalle'
+    },
+    fecha: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      field: 'fecha'
     },
     empleadoId: {
       type: DataTypes.INTEGER,

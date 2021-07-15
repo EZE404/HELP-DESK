@@ -6,12 +6,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
-      field: 'id'
+      field: 'id',
+      autoIncrement: true
     },
-    fechaAltum: {
+    fechaAlta: {
       type: DataTypes.DATE,
       allowNull: false,
-      field: 'fecha_altum'
+      field: 'fecha_alta'
     },
     tipo: {
       type: DataTypes.STRING,
@@ -25,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     uuid: {
       type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       unique: true,
       field: 'uuid'
