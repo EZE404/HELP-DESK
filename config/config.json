@@ -5,7 +5,13 @@
     "password": "",
     "database": "help_desk",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "useUtc": false,
+    "timezone": "-03:00",
+    "define": {
+      "underscoredAll": true,
+      "timestamps": false
+    }
   },
   "test": {
     "port": "3306",
@@ -13,7 +19,13 @@
     "password": "",
     "database": "help_desk",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "useUtc": false,
+    "timezone": "-03:00",
+    "define": {
+      "underscoredAll": true,
+      "timestamps": false
+    }
   },
   "production": {
     "port": "3306",
@@ -21,6 +33,12 @@
     "password": "",
     "database": "help_desk",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "useUtc": false,
+    "timezone": "-03:00",
+    "define": {
+      "underscoredAll": true,
+      "timestamps": false
+    }
   }
 }

@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('help-desk:server');
 var http = require('http');
-
+const db = require('../models/index');
 /**
  * Get port from environment and store in Express.
  */
@@ -81,11 +81,19 @@ function onError(error) {
  * Event listener for HTTP server "listening" event.
  */
 
-function onListening() {
+async function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
   console.log('Servidor levantado en ' + 'http://localhost:' + addr.port + '/');
+
+  try {
+    const _msg = '#### SEQUELIZE CONECTADO A DB ####';
+    await db.sequelize.sync({force:true}).then(() => console.log(_msg))
+  } catch (error) {
+    console.log('#### ERROR AL CONECTAR A DB ####');
+    console.log(error);
+  }
 }
