@@ -6,7 +6,6 @@ var logger = require('morgan');
 var favicon = require('serve-favicon');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -25,7 +24,8 @@ app.use(favicon(path.join(__dirname,'public','favicon.png')));
 
 // routes
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/clientes', require('./routes/routerCliente'));
+app.use('/solicitudes', require('./routes/routerSolicitud'));
 
 // 404
 app.get('*', function (req, res) {

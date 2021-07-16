@@ -1,5 +1,7 @@
 'use strict';
 
+const { Sequelize } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   const Solicitud = sequelize.define('solicitud', {
     id: {
@@ -11,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     fechaAlta: {
       type: DataTypes.DATE,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       allowNull: false,
       field: 'fecha_alta'
     },
