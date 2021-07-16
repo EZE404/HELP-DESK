@@ -9,7 +9,6 @@
     "useUtc": false,
     "timezone": "-03:00",
     "define": {
-      "underscoredAll": true,
       "timestamps": false
     }
   },
@@ -23,7 +22,6 @@
     "useUtc": false,
     "timezone": "-03:00",
     "define": {
-      "underscoredAll": true,
       "timestamps": false
     }
   },
@@ -37,7 +35,6 @@
     "useUtc": false,
     "timezone": "-03:00",
     "define": {
-      "underscoredAll": true,
       "timestamps": false
     }
   }

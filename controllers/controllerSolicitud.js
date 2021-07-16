@@ -1,4 +1,4 @@
-const { cliente, solicitud } = require('../models/index');
+const { Cliente, Solicitud } = require('../models/index');
 const { Op } = require('sequelize');
 const _ = require('lodash');
 
@@ -11,7 +11,7 @@ async function todo(req, res) {
     const { dni } = req.body;
     try {
 
-        const clientes_dni = await cliente.findAll({
+        const clientes_dni = await Cliente.findAll({
             where: {
                 dni
             }
@@ -22,16 +22,16 @@ async function todo(req, res) {
         if (clientes_dni.length) {
             console.log('id de cliente encontrado: ',clientes_dni[0].id);
 
-            const cliente_solicitudes = await cliente.findByPk(clientes_dni[0].id, {
-                include: solicitud
+            const cliente_solicitudes = await Cliente.findByPk(clientes_dni[0].id, {
+                include: Solicitud
             });
 
             console.log('cliente_solicitudes: ', cliente_solicitudes);
             
-            let solicitudes_length = _.size(cliente_solicitudes.solicitudes);
+            let solicitudes_length = _.size(cliente_solicitudes.Solicituds);
             
             if (solicitudes_length) {
-                return res.status(200).json(cliente_solicitudes.solicitudes);
+                return res.status(200).json(cliente_solicitudes.Solicituds);
             } else {
                 return res.status(200).send(`No hay solicitudes para el cliente con dni ${dni}`);
             }
@@ -63,15 +63,15 @@ async function crear(req, res) {
     console.log('Entró a la función crear() de controllerSolicitud');
     console.log(req.body);
 
-    const { cliente_id, tipo, descripcion, } = req.body;
+    const { clienteId, tipo, descripcion, } = req.body;
 
     try {
-        const cliente_buscado = await cliente.findByPk(cliente_id);
+        const cliente_buscado = await Cliente.findByPk(clienteId);
         console.log('cliente buscado en crear solicitud', cliente_buscado);
 
         if (cliente_buscado) {
-            const solicitud_creada = await solicitud.create({
-                cliente_id : cliente_buscado.id,
+            const solicitud_creada = await Solicitud.create({
+                ClienteId : cliente_buscado.id,
                 tipo,
                 descripcion,
                 

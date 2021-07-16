@@ -3,7 +3,7 @@
 const { Sequelize } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  const Historial = sequelize.define('historial', {
+  const Historial = sequelize.define('Historial', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -47,22 +47,22 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: 'solicitud_id'
     }
-  }, { tableName: 'historial' });
+  }, {});
 
   Historial.associate = (models) => {
 
-    Historial.belongsTo(models.solicitud, {
-      foreignKey: 'solicitud_id',
+    Historial.belongsTo(models.Solicitud, {
+      foreignKey: 'solicitudId',
       as: 'solicitud'
     });
     
-    Historial.belongsTo(models.empleado, {
-      foreignKey: 'empleado_id',
+    Historial.belongsTo(models.Empleado, {
+      foreignKey: 'empleadoId',
       as: 'empleado'
     });
     
-    Historial.belongsTo(models.area, {
-      foreignKey: 'area_id',
+    Historial.belongsTo(models.Area, {
+      foreignKey: 'areaId',
       as: 'area'
     });
 

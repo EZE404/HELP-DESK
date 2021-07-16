@@ -3,7 +3,7 @@
 const { Sequelize } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  const Solicitud = sequelize.define('solicitud', {
+  const Solicitud = sequelize.define('Solicitud', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
       field: 'id',
       autoIncrement: true
     },
+/*     idCliente: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'cliente_id'
+    }, */
     fechaAlta: {
       type: DataTypes.DATE,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -34,22 +39,19 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       field: 'uuid'
     }
-  }, { tableName: 'solicitud' });
+  }, {});
 
   Solicitud.associate = (models) => {
 
-    Solicitud.belongsTo(models.cliente, {
-      foreignKey: 'cliente_id',
-      as: 'cliente'
-    });
+    Solicitud.belongsTo(models.Cliente);
     
-    Solicitud.hasMany(models.historial, {
-      foreignKey: 'solicitud_id',
+    Solicitud.hasMany(models.Historial, {
+      foreignKey: 'solicitudId',
       as: 'historiales'
     });
     
-    Solicitud.hasMany(models.notificacion, {
-      foreignKey: 'solicitud_id',
+    Solicitud.hasMany(models.Notificacion, {
+      foreignKey: 'solicitudId',
       as: 'notificaciones'
     });
     

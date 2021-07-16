@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const Empleado = sequelize.define('empleado', {
+  const Empleado = sequelize.define('Empleado', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -46,17 +46,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: 'fecha_altum'
     }
-  }, { tableName: 'empleado' });
+  }, {});
 
   Empleado.associate = (models) => {
 
-    Empleado.belongsTo(models.area, {
-      foreignKey: 'area_id',
+    Empleado.belongsTo(models.Area, {
+      foreignKey: 'areaId',
       as: 'area'
     });
     
-    Empleado.hasMany(models.historial, {
-      foreignKey: 'empleado_id',
+    Empleado.hasMany(models.Historial, {
+      foreignKey: 'empleadoId',
       as: 'historiales'
     });
   };

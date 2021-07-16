@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const Cliente = sequelize.define('cliente', {
+  const Cliente = sequelize.define('Cliente', {
 
     //########## ID ##################
     id: {
@@ -70,14 +70,11 @@ module.exports = (sequelize, DataTypes) => {
       field: 'uuid'
     }
     
-  }, { tableName: 'cliente' });
+  }, {});
   
   Cliente.associate = (models) => {
 
-    Cliente.hasMany(models.solicitud, {
-      foreignKey: 'cliente_id',
-      as: 'solicitud'
-    });
+    Cliente.hasMany(models.Solicitud);
 
   };
 

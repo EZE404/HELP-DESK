@@ -1,4 +1,4 @@
-const { cliente } = require('../models/index');
+const { Cliente } = require('../models/index');
 const { Op } = require('sequelize');
 
 
@@ -8,7 +8,7 @@ const { Op } = require('sequelize');
 async function todos(req, res) {
     console.log('Entró a funcion todos() de controllerCliente');
     try {
-        const clientes = await cliente.findAll();
+        const clientes = await Cliente.findAll();
         res.status(200).json(clientes);
     } catch (error) {
         res.status(500).json(error);
@@ -24,7 +24,7 @@ async function crear(req, res) {
     const { nombre, dni, email, telefono, pass } = req.body;
 
     try {
-        const clientes_dni_email = await cliente.findAll({
+        const clientes_dni_email = await Cliente.findAll({
             where: {
                 
                 [Op.or]: [
@@ -49,7 +49,7 @@ async function crear(req, res) {
             return res.status(500).json(aviso);
         };
 
-        const cliente_creado = await cliente.create({
+        const cliente_creado = await Cliente.create({
             nombre,
             dni,
             email,

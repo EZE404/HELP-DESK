@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const Notificacion = sequelize.define('notificacion', {
+  const Notificacion = sequelize.define('Notificacion', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -24,12 +24,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: 'mensaje'
     }
-  }, { tableName: 'notificacion' });
+  }, {});
 
   Notificacion.associate = (models) => {
 
-    Notificacion.belongsTo(models.solicitud, {
-      foreignKey: 'solicitud_id',
+    Notificacion.belongsTo(models.Solicitud, {
+      foreignKey: 'solicitudId',
       as: 'solicitud'
     });
 

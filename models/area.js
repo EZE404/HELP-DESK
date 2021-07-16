@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const Area = sequelize.define('area', {
+  const Area = sequelize.define('Area', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -15,17 +15,17 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       field: 'nombre'
     }
-  }, { tableName: 'area' });
+  }, {});
 
   Area.associate = (models) => {
 
-    Area.hasMany(models.empleado, {
-      foreignKey: 'area_id',
+    Area.hasMany(models.Empleado, {
+      foreignKey: 'areaId',
       as: 'empleados'
     });
     
-    Area.hasMany(models.historial, {
-      foreignKey: 'area_id',
+    Area.hasMany(models.Historial, {
+      foreignKey: 'areaId',
       as: 'historiales'
     });
     
