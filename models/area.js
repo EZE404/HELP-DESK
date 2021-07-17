@@ -13,21 +13,25 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      field: 'nombre'
+      field: 'nombre',
+      validate: {
+        notNull: {
+          args: true,
+          msg: "El nombre no puede ser nulo"
+        },
+        notEmpty: {
+          args: true,
+          msg: "El nombre no puede estar vacío"
+        }
+      }
     }
   }, {});
 
   Area.associate = (models) => {
 
-    Area.hasMany(models.Empleado, {
-      foreignKey: 'areaId',
-      as: 'empleados'
-    });
+    Area.hasMany(models.Empleado);
     
-    Area.hasMany(models.Historial, {
-      foreignKey: 'areaId',
-      as: 'historiales'
-    });
+    Area.hasMany(models.Historial);
     
   };
   

@@ -51,20 +51,11 @@ module.exports = (sequelize, DataTypes) => {
 
   Historial.associate = (models) => {
 
-    Historial.belongsTo(models.Solicitud, {
-      foreignKey: 'solicitudId',
-      as: 'solicitud'
-    });
+    Historial.belongsTo(models.Solicitud);
     
-    Historial.belongsTo(models.Empleado, {
-      foreignKey: 'empleadoId',
-      as: 'empleado'
-    });
+    Historial.belongsTo(models.Empleado);
     
-    Historial.belongsTo(models.Area, {
-      foreignKey: 'areaId',
-      as: 'area'
-    });
+    Historial.belongsTo(models.Area);
 
   };
 

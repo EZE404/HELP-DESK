@@ -8,6 +8,7 @@ var app = require('../app');
 var debug = require('debug')('help-desk:server');
 var http = require('http');
 const db = require('../models/index');
+const { truncateSync } = require('fs');
 /**
  * Get port from environment and store in Express.
  */
@@ -91,7 +92,7 @@ async function onListening() {
 
   try {
     const _msg = '#### SEQUELIZE CONECTADO A DB ####';
-    await db.sequelize.sync({force:true}).then(() => console.log(_msg));
+    await db.sequelize.sync({force:false, alter:true}).then(() => console.log(_msg));
   } catch (error) {
     console.log('#### ERROR AL CONECTAR A DB ####');
     console.log(error);

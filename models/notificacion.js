@@ -28,10 +28,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Notificacion.associate = (models) => {
 
-    Notificacion.belongsTo(models.Solicitud, {
-      foreignKey: 'solicitudId',
-      as: 'solicitud'
-    });
+    Notificacion.belongsTo(models.Solicitud);
 
   };
 

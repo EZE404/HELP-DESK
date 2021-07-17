@@ -1,5 +1,7 @@
 'use strict';
 
+const { Sequelize } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   const Empleado = sequelize.define('Empleado', {
     id: {
@@ -41,24 +43,26 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: 'rol'
     },
-    fechaAltum: {
+    fechaAlta: {
       type: DataTypes.DATE,
       allowNull: false,
-      field: 'fecha_altum'
-    }
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      field: 'fecha_alta'
+    },
+    //############# VERIFICADO ##############
+    verificado: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: 0,
+      field: 'verificado'
+    }    
   }, {});
 
   Empleado.associate = (models) => {
 
-    Empleado.belongsTo(models.Area, {
-      foreignKey: 'areaId',
-      as: 'area'
-    });
+    Empleado.belongsTo(models.Area);
     
-    Empleado.hasMany(models.Historial, {
-      foreignKey: 'empleadoId',
-      as: 'historiales'
-    });
+    Empleado.hasMany(models.Historial);
   };
   
   return Empleado;

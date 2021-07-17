@@ -11,11 +11,6 @@ module.exports = (sequelize, DataTypes) => {
       field: 'id',
       autoIncrement: true
     },
-/*     idCliente: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      field: 'cliente_id'
-    }, */
     fechaAlta: {
       type: DataTypes.DATE,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -45,15 +40,9 @@ module.exports = (sequelize, DataTypes) => {
 
     Solicitud.belongsTo(models.Cliente);
     
-    Solicitud.hasMany(models.Historial, {
-      foreignKey: 'solicitudId',
-      as: 'historiales'
-    });
+    Solicitud.hasMany(models.Historial);
     
-    Solicitud.hasMany(models.Notificacion, {
-      foreignKey: 'solicitudId',
-      as: 'notificaciones'
-    });
+    Solicitud.hasMany(models.Notificacion);
     
   }
   return Solicitud;

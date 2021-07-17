@@ -26,6 +26,8 @@ app.use(favicon(path.join(__dirname,'public','favicon.png')));
 app.use('/', indexRouter);
 app.use('/clientes', require('./routes/routerCliente'));
 app.use('/solicitudes', require('./routes/routerSolicitud'));
+app.use('/empleados', require('./routes/routerEmpleado'));
+app.use('/areas', require('./routes/routerArea'));
 
 // 404
 app.get('*', function (req, res) {

@@ -1,12 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-const controller = require('../controllers/controllerCliente');
+const controller = require('../controllers/controllerEmpleado');
 
-// TRAE TODOS LOS CLIENTES
+// TRAER TODOS LOS EMPLEADOS
 router.get('/', controller.todos);
 
-// CREAR EMPLEADO
 router.post('/crear', controller.crear);
 
 module.exports = router;
