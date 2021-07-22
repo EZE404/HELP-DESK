@@ -6,11 +6,11 @@ const _ = require('lodash');
 //################## GET SOLICITUDES ####################
 
 async function todo(req, res) {
+
     console.log('Entró a la función todo() de controllerSolicitud');
     console.log(req.body);
     const { dni } = req.body;
     try {
-
         const clientes_dni = await Cliente.findAll({
             where: {
                 dni

@@ -1,0 +1,21 @@
+extends ../layout
+block content
+  .container
+    .row.mx-auto
+      .col-5.mx-auto.my-4
+        .card
+          .card-body.p-4
+            form(action="/login" method="post")
+              .form-group
+                label(for="email") Email
+                input.form-control#email(type="text" name="email" placeholder="Email", required)
+              .form-group
+                label(for="password") Contraseña
+                input.form-control#pass(type="password" name="pass" placeholder="Contraseña", required)
+              .form-group
+                label(for="type") Tipo de Usuario
+                select.form-control#type(name="type")
+                  option(value="cliente") Cliente
+                  option(value="empleado") Empleado
+              .form-group.text-center
+                input.btn.btn-primary(type="submit" value="Ingresar")

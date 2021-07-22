@@ -1,6 +1,6 @@
 const { Empleado, Area } = require('../models/index');
 const { Op } = require('sequelize');
-
+const bcrypt = require('bcrypt');
 
 //##############################################################
 //################# BUSCAR CLIENTE #############################
@@ -66,12 +66,15 @@ async function crear(req, res) {
             return res.status(500).json(aviso);
         };
 
+        const salt = await bcrypt.genSalt(10);        
+        const pass_enc = await bcrypt.hash(pass, salt);
+        
         const empleado_creado = await Empleado.create({
             nombre,
             dni,
             email,
             telefono,
-            pass,
+            pass: pass_enc,
             rol,
             AreaId: area_id
         });
