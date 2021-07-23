@@ -1,10 +1,71 @@
 const { Cliente } = require('../models/index');
 const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
+const clg = require('../tools/clg');
 
+//#######################################################
+//############### POST LOGIN CLIENTE ####################
+
+async function login(req, res) {
+
+    await clg.info('Ingreso a handler para Cliente POST - /login');
+    
+    const body = req.body;
+    await clg.objeto(body, 'Body del formulario');
+
+    if (!body.email || !body.pass) {
+
+        return res.send('Dejá de tocarme el código del lado del cliente, pa');
+    
+    }
+
+    try {
+
+        const user = await Cliente.findOne({
+            where: {
+                email: body.email
+            }
+        });
+
+        await clg.objeto(user, 'Client.findOne');
+        
+        if (user) {
+
+            // compara password del usuario con password hasheado en la BD
+            const validPassword = await bcrypt.compare(body.pass, user.pass);
+    
+            if (validPassword) {
+
+                //configurar la session para no autenticar en cada requerimiento
+                req.session.user = user;
+                req.session.type = "cliente";
+
+                await clg.info(`${user.email} autenticado`);
+                //return res.status(200).json({ message: "Usuario Autenticado" });
+                return res.redirect('/');
+
+            } else {
+
+                await clg.info('Contraseña inválida');
+                return res.status(400).json({ error: "Password Inválido" });
+
+            }
+
+        } else {
+
+            await clg.info(`El usuario ${body.email} no existe`);
+            return res.status(401).json({ error: `El usuario ${body.email} no existe` });
+
+        };
+
+    } catch (error) {
+        res.status(500).json(error);
+    };
+
+};
 
 //##############################################################
-//################# BUSCAR CLIENTE #############################
+//################## BUSCAR CLIENTES ###########################
 
 async function todos(req, res) {
     console.log('Entró a funcion todos() de controllerCliente');
@@ -86,6 +147,7 @@ async function crear(req, res) {
 //##############################################################
 
 module.exports = {
+    login,
     todos,
     crear
 }

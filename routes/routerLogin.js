@@ -1,37 +1,77 @@
 var express = require('express');
 var router = express.Router();
+const clg = require('../tools/clg');
 
-const controller = require('../controllers/controllerLogin');
+const controllerCliente = require('../controllers/controllerCliente');
+const controllerEmpleado = require('../controllers/controllerEmpleado');
 
-//############# MIDDLEWARE ##############
-router.use(controller.validarLoginInv);
+//#################### MIDDLEWARE ######################
 
-//############# ROUTES ##################
+router.use(async (req, res, next) => {
 
-// FORMULARIO DE LOGIN
-router.get('/', controller.formLogin);
+    await clg.info('Verificación de logueo');
 
+    if (!req.session.user) {
 
+        await clg.info('No está logueado');
+        
+        return next();
 
-// FORMULARIO PARA REGISTRARSE
-router.get('/signup', controller.formSignup)
+    };
 
-// POST DEL LOGIN
+    await clg.info('Ya está logueado. Redirección a solicitudes');
+    await clg.objeto(req.session.user, 'Usuario logueado');
+    return res.redirect('/');
+
+});
+
+//#######################################################
+//################## FORM LOGIN #########################
+
+router.get('/', async (req, res) => {
+
+    await clg.info('Ingreso a handler para GET - /login');
+
+    res.render('login/login.pug', {
+        title: "Ingresar"
+    });
+
+});
+
+//#######################################################
+//################## FORM SIGN UP #######################
+
+router.get('/signup', async (req, res) => {
+
+    await clg.info('Ingreso a handler para GET - /signup');
+    
+    return res.render('login/signup', {
+        title: "Registrarse"
+    });
+
+});
+
+//#######################################################
+//################## POST LOGIN #########################
+
 router.post('/', (req, res) => {
+
     const type = req.body.type;
+
     if (type == 'cliente') {
-        return controller.loginCliente(req, res);
+        return controllerCliente.login(req, res);
     } else if (type == 'empleado') {
-        return controller.loginEmpleado(req, res);
+        return controllerEmpleado.login(req, res);
     } else {
         return res.json({msg: "dejá de tocarme el código en el cliente, pa"});
     }
+    
 });
 
-//router.post('/', controller.login)
+//#######################################################
+//############### POST SIGN UP CLIENTE ##################
 
-// POST DEL REGISTRO
-router.post('/signup', require('../controllers/controllerCliente').crear);
+router.post('/signup', controllerCliente.crear);
 
-
+//###################### EXPORT #########################
 module.exports = router;
