@@ -9,10 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       field: 'id',
       autoIncrement: true
     },
-    solicitudId: {
+    SolicitudId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'solicitud_id'
+      field: 'SolicitudId'
     },
     fecha: {
       type: DataTypes.DATE,

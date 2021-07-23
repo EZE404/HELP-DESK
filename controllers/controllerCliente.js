@@ -129,7 +129,7 @@ async function crear(req, res) {
             telefono,
             pass: pass_enc
         });
-
+        clg.info(cliente_creado instanceof Cliente)
         return res.status(200).json(cliente_creado)
     } catch (error) {
         return res.status(500).json(error);

@@ -13,16 +13,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     prioridad: {
       type: DataTypes.STRING,
+      defaultValue: 'NORMAL',
       allowNull: false,
       field: 'prioridad'
     },
     estado: {
       type: DataTypes.STRING,
+      defaultValue: 'Pendiente',
       allowNull: false,
       field: 'estado'
     },
     detalle: {
       type: DataTypes.STRING,
+      defaultValue: 'Solicitud ingresante',
       allowNull: false,
       field: 'detalle'
     },
@@ -32,20 +35,19 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       field: 'fecha'
     },
-    empleadoId: {
+    EmpleadoId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      field: 'empleado_id'
+      field: 'EmpleadoId'
     },
-    areaId: {
+    AreaId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'area_id'
+      field: 'AreaId'
     },
-    solicitudId: {
+    SolicitudId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'solicitud_id'
+      field: 'SolicitudId'
     }
   }, {});
 

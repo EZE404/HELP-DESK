@@ -1,6 +1,27 @@
 extends layout
 
 block content
-  h1.display-4
-    | Hola #{user.nombre}, 
-    | sos un usuario de tipo #{type}
+  .container.mt-5.p-5
+    .row.bg-light
+      .col.mx-auto
+        table.table
+          thead
+            tr
+              th Fecha
+              th Tipo
+              th Descripcion
+              th Prioridad
+              th Estado
+              th Detalles
+          tbody
+            each solicitud in solicitudes
+              tr
+                td: a(href='/solicitudes/'+solicitud.uuid) #{moment(solicitud.fechaAlta).format('DD-MM-YYYY H:MM')}
+                td=solicitud.tipo
+                td=solicitud.descripcion
+                if (solicitud.Historials.length)
+                  td=solicitud.Historials[0].prioridad
+                  td=solicitud.Historials[0].estado
+                  td=solicitud.Historials[0].detalle
+          
+

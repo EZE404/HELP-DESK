@@ -33,6 +33,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
       field: 'uuid'
+    },
+    ClienteId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: 'ClienteId'
     }
   }, {});
 
