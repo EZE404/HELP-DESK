@@ -3,15 +3,19 @@
     "port": "3306",
     "username": "root",
     "password": "",
-    "database": "help_desk",
+    "database": "help_desk_test",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "define": {
+      "freezeTableName": true,
+      "underscored": true
+    }
   },
   "test": {
     "port": "3306",
     "username": "root",
     "password": "",
-    "database": "help_desk",
+    "database": "help_desk_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
@@ -19,7 +23,7 @@
     "port": "3306",
     "username": "root",
     "password": "",
-    "database": "help_desk",
+    "database": "help_desk_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }

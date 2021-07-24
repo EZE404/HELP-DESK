@@ -88,4 +88,5 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
   console.log('Servidor levantado en ' + 'http://localhost:' + addr.port + '/');
+  require('../models/index').sequelize.sync({force:false}).then(()=>console.log('SEQUELIZE CONECTADO')).catch(()=>console.log('ERROR SEQUELIZE'))
 }
