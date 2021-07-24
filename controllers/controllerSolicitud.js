@@ -23,7 +23,10 @@ async function getSolicitudByUuid(req, res) {
             where: {
                 uuid: req.params.uuid
             },
-            include: Historial,
+            include: {
+                model: Historial,
+                include: Area
+            },
             order: [[{model: Historial}, 'fecha', 'DESC']]
         });
 
@@ -31,7 +34,12 @@ async function getSolicitudByUuid(req, res) {
             return clg.info('Fallo al traer solicitud con historiales en getSolicitudByUuid');
         };
 
-        return res.json(solicitud);
+        return res.render('models/cliente_solicitud', {
+            title: "Detalles de Reclamo",
+            auth: true,
+            type: req.session.type,
+            solicitud
+        })
     } catch(err) {
 
     };
@@ -195,14 +203,14 @@ async function crear(req, res) {
             ClienteId,
             tipo,
             descripcion,
-            historials: [
+            Historials: [
                 {
                     AreaId: area.id,
                 }
             ]
             
         },{
-            include: [Solicitud.hasMany(Historial, {as:"historials"})]
+            include: Historial
         });
 
 
