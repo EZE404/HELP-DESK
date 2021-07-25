@@ -10,4 +10,4 @@ La rama 'master' es solamente la plantilla inicial. El trabajo en sí, está en 
 6. npx sequelize-cli db:seed:all
 7. npm run dev
 8. http://localhost:3000
-9. LOG IN: { email: eze@correo.com, pass: 'ezequiel'} // Cliente / Empleado
+9. LOG IN: { email: eze@correo.com, pass: 'ezequiel' } // Cliente/Empleado
