@@ -31,6 +31,7 @@ app.use("/clientes", require("./routes/routerCliente"));
 app.use("/solicitudes", require("./routes/routerSolicitud"));
 app.use("/empleados", require("./routes/routerEmpleado"));
 app.use("/areas", require("./routes/routerArea"));
+app.use("/validar", require('./routes/routerTestValidaciones')); //! SOLO PARA TESTEAR VALIDACIONES DE SEQUELIZE
 
 // CERRAR SESIÓN
 app.get('/close', async (req, res) => {
