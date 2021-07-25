@@ -9,7 +9,7 @@ var debug = require('debug')('help-desk:server');
 var http = require('http');
 const db = require('../models/index');
 const { truncateSync } = require('fs');
-const chalk = require('chalk');
+const clg = require('../tools/clg');
 /**
  * Get port from environment and store in Express.
  */
@@ -90,13 +90,13 @@ async function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 
-  console.log(chalk.cyanBright.bgBlack.bold('> SERVER UP ON ' + 'http://localhost:' + addr.port + '/'));
+  await clg.info('SERVER UP ON ' + 'http://localhost:' + addr.port + '/');
 
   try {
-    const _msg = '> SEQUELIZE CONNECTED TO DATABASE';
-    await db.sequelize.sync({force:false}).then(() => console.log(chalk.cyanBright.bgBlack.bold(_msg)));
+    const _msg = 'SEQUELIZE CONNECTED TO DATABASE';
+    await db.sequelize.authenticate().then(() => clg.info(_msg));
   } catch (error) {
-    console.log(chalk.red.bgBlack.bold('#### ERROR AL CONECTAR A DB ####'));
+    await clg.info('#### ERROR AL CONECTAR A DB ####');
     console.log(error);
   }
 }

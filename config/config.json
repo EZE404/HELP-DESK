@@ -6,11 +6,13 @@
     "database": "help_desk",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "logging": false,
     "useUtc": false,
     "timezone": "-03:00",
+    "seederStorage": "sequelize",
     "define": {
-      "timestamps": false
+      "timestamps": false,
+      "charset": "utf8",
+      "collate": "utf8_general_ci"
     }
   },
   "test": {
@@ -23,7 +25,9 @@
     "useUtc": false,
     "timezone": "-03:00",
     "define": {
-      "timestamps": false
+      "timestamps": false,
+      "charset": "utf8",
+      "collate": "utf8_general_ci"
     }
   },
   "production": {
@@ -35,8 +39,11 @@
     "dialect": "mysql",
     "useUtc": false,
     "timezone": "-03:00",
+    "logging": false,
     "define": {
-      "timestamps": false
+      "timestamps": false,
+      "charset": "utf8",
+      "collate": "utf8_general_ci"
     }
   }
 }

@@ -38,11 +38,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: 'telefono'
     },
-    rol: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      field: 'rol'
-    },
     fechaAlta: {
       type: DataTypes.DATE,
       allowNull: false,

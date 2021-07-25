@@ -24,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
           msg: "El nombre no puede estar vacío"
         }
       }
+    },
+    activa: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
     }
   }, {});
 
