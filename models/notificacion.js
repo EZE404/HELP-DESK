@@ -12,17 +12,45 @@ module.exports = (sequelize, DataTypes) => {
     SolicitudId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'SolicitudId'
+      field: 'SolicitudId',
+      validate: {
+        notNull: {
+          args: true,
+          msg: "El id de solicitud no puede ser nulo"
+        },
+        isInt: {
+          args: true,
+          msg: "El ID de solicitud debe ser un entero"
+        },
+        enteroPositivo(valor) {
+          if (valor < 1) {
+            throw new Error('El ID de solicitud debe ser un entero positivo')
+          }
+        }
+      }
     },
     fecha: {
       type: DataTypes.DATE,
       allowNull: false,
-      field: 'fecha'
+      field: 'fecha',
+      validate: {
+        isDate: {
+          args: true,
+          msg: "Formato de fecha de notificación inválido"
+        }
+      }
     },
     mensaje: {
       type: DataTypes.STRING,
       allowNull: false,
-      field: 'mensaje'
+      field: 'mensaje',
+      validate: {
+        len: {
+          args: [100, 1000],
+          msg: "El mensaje debe contener entre 100 y 1000 caracteres"
+        }
+      }
+
     }
   }, {});
 

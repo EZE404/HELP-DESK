@@ -15,7 +15,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       allowNull: false,
-      field: 'fecha_alta'
+      field: 'fecha_alta',
+      validate: {
+        isDate: {
+          args: true,
+          msg: "La fecha de alta tiene que ser una fecha válida"
+        }
+      }
     },
     tipo: {
       type: DataTypes.STRING,
@@ -25,19 +31,46 @@ module.exports = (sequelize, DataTypes) => {
     descripcion: {
       type: DataTypes.STRING,
       allowNull: false,
-      field: 'descripcion'
+      field: 'descripcion',
+      validate: {
+        len: {
+          args: [100, 1000],
+          msg: "La descripción debe contener entre 100 y 1000 caracteres"
+        }
+      }
     },
     uuid: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       unique: true,
-      field: 'uuid'
+      field: 'uuid',
+      validate: {
+        isUUID: {
+          args: 4,
+          msg: "El UUID debe ser un UUIDV4 válido"
+        }
+      }
     },
     ClienteId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'ClienteId'
+      field: 'ClienteId',
+      validate: {
+        notNull: {
+          args: true,
+          msg: "El id de cliente no puede ser nulo"
+        },
+        isInt: {
+          args: true,
+          msg: 'El id de cliente debe ser un entero'
+        },
+        enteroPositivo(valor) {
+          if (valor < 1 && valor != null) {
+            throw new Error('El ID de cliente debe ser un entero positivo')
+          }
+        }
+      }
     }
   }, {});
 

@@ -1,5 +1,7 @@
 'use strict';
 
+const { Sequelize } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   const Cliente = sequelize.define('Cliente', {
 
@@ -63,9 +65,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
       field: 'email',
-      isEmail: {
-        args: true,
-        msg: "El correo debe ser una dirección válida"
+      validate: {
+        isEmail: {
+          args: true,
+          msg: "El correo debe ser una dirección válida"
+        }
       }
     },
     //############ TELEFONO ################
@@ -89,6 +93,18 @@ module.exports = (sequelize, DataTypes) => {
 
       }
     },
+    fechaAlta: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      field: 'fecha_alta',
+      validate: {
+        isDate: {
+          args: true,
+          msg: "La fecha de alta tiene que ser una fecha válida"
+        }
+      }
+    },
     //########### CONTRASEÑA ##############
     pass: {
       type: DataTypes.STRING,
@@ -110,7 +126,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: 0,
-      field: 'verificado'
+      field: 'verificado',
+      validate: {
+        validar(valor) {
+          if (typeof valor == 'boolean') {
+            throw new Error("Verificado debe ser un booleano");
+          }
+        }
+      }
     },
     //############# UUIDV4 ###########
     uuid: {

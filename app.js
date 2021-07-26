@@ -5,7 +5,7 @@ var path = require("path");
 var logger = require("morgan");
 var favicon = require("serve-favicon");
 var session = require('express-session');
-
+const _ = require('lodash');
 var indexRouter = require("./routes/index");
 
 var app = express();
@@ -18,6 +18,14 @@ app.set("view engine", "pug");
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use((req, res, next) => {
+	_.forIn(req.body, function(value, key) {
+        if (typeof req.body[key] == 'string') {
+            req.body[key] = value.trim();
+        };
+    });
+	return next();
+});
 //app.use(cookieParser());
 app.use(session({secret:'ezequiel', resave: false, saveUninitialized: false}));
 app.use(express.static(path.join(__dirname, "public")));
