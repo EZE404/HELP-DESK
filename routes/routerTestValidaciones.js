@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const _ = require('lodash');
 
-const { Area, Cliente, Empleado, Solicitud, Historial, Notificacion } = require('../models/index');
+const { Area, Cliente, Empleado, Solicitud, Historial, Notificacion, Sesion } = require('../models/index');
 
 //* VALIDANDO AREA
 router.post('/area', async (req, res) => {
@@ -179,6 +179,32 @@ router.post('/notificacion', async (req, res) => {
         
         if (validacion) {
             return res.json(notificacion);
+        };
+
+        console.log(validacion);
+        return res.json(validacion);
+
+    } catch (error) {
+        return res.json(error);
+    };
+
+});
+
+//* VALIDANDO SESSION
+router.post('/session', async (req, res) => {
+
+    let body = req.body;
+  
+    console.log('body trimeado');
+    console.log(body);
+
+    try {
+        const sesion = await Sesion.build(body);
+        const validacion = await sesion.validate();
+        
+        if (validacion) {
+            sesion.save();
+            return res.json(sesion);
         };
 
         console.log(validacion);

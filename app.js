@@ -6,7 +6,16 @@ var logger = require("morgan");
 var favicon = require("serve-favicon");
 var session = require('express-session');
 const _ = require('lodash');
-var indexRouter = require("./routes/index");
+
+const db = require('./models/index');
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
+let myStore = new SequelizeStore({
+	db: db.sequelize,
+	modelKey: 'Sesion',
+	tableName: 'session'
+});
+
+
 
 var app = express();
 
@@ -19,21 +28,21 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use((req, res, next) => {
-	_.forIn(req.body, function(value, key) {
-        if (typeof req.body[key] == 'string') {
-            req.body[key] = value.trim();
-        };
-    });
+	_.forIn(req.body, function (value, key) {
+		if (typeof req.body[key] == 'string') {
+			req.body[key] = value.trim();
+		};
+	});
 	return next();
 });
 //app.use(cookieParser());
-app.use(session({secret:'ezequiel', resave: false, saveUninitialized: false}));
+app.use(session({ secret: 'ezequiel', store: myStore, resave: true, saveUninitialized: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.locals.moment = require("moment");
 app.use(favicon(path.join(__dirname, "public", "favicon.png")));
 
 // routes
-app.use("/", indexRouter);
+app.use("/", require("./routes/index"));
 app.use('/login', require('./routes/routerLogin'));
 app.use("/clientes", require("./routes/routerCliente"));
 app.use("/solicitudes", require("./routes/routerSolicitud"));
@@ -43,8 +52,8 @@ app.use("/validar", require('./routes/routerTestValidaciones')); //! SOLO PARA T
 
 // CERRAR SESIÓN
 app.get('/close', async (req, res) => {
-    await req.session.destroy();
-    res.redirect('/');
+	await req.session.destroy();
+	res.redirect('/');
 })
 
 // 404
