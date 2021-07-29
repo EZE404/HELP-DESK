@@ -1,34 +1,35 @@
 extends ../layout
 
 block content
-    .container.p-4
-        .row.p-2.bg-light.text-center
-            .col
-                p.display-4
-                    | Fecha: #{moment(solicitud.fechaAlta).format('DD-MM-YYYY H:mm')}
-                    | -
-                    | Tipo: #{solicitud.tipo}
-        .row.bg-light
-            .col.mx-auto.mt-2.py-2.bg-info
-                p
-                | Descripcion: #{solicitud.descripcion}
-        .row.bg-light
-            .col.mx-auto.mt-4.py-2
-                table.table
-                    thead
-                        tr.text-center
-                            th(colspan="5") HISTORIAL DE MOVIMIENTOS
-                        tr
-                            th Prioridad
-                            th Estado
-                            th Detalle
-                            th Fecha
-                            th Area
-                    tbody
-                        each historial in solicitud.Historials
-                            tr
-                                td=historial.prioridad
-                                td=historial.estado
-                                td=historial.detalle
-                                td #{moment(historial.fecha).format('DD-MM-YYYY H:mm')}
-                                td=historial.Area.nombre
+  .container.p-4
+    .row.p-2
+        .card
+          .card-body
+            dt.col-sm-3 Fecha
+            dd.col-sm-9 #{moment(solicitud.fechaAlta).format('DD-MM-YYYY H:mm')}
+            dt.col-sm-3 Tipo
+            dd.col-sm-9 #{solicitud.tipo}
+            dt.col-sm-3 Descripción
+            dd.col-sm-9
+                p #{solicitud.descripcion}
+
+    .row.bg-light
+      .col.mx-auto.mt-4.py-2
+        table.table.table-dark.table-hover
+          thead
+            tr.text-center
+              th(colspan="5") HISTORIAL DE MOVIMIENTOS
+            tr
+              th Prioridad
+              th Estado
+              th Detalle
+              th Fecha
+              th Area
+          tbody
+            each historial in solicitud.Historials
+              tr
+                td=historial.prioridad
+                td=historial.estado
+                td=historial.detalle
+                td #{moment(historial.fecha).format('DD-MM-YYYY H:mm')}
+                td=historial.Area.nombre

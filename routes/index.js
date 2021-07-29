@@ -11,6 +11,7 @@ router.get('/', async function (req, res) {
     res.render('index', {
       title: "Inicio",
       type: req.session.type,
+      user: req.session.user,
       auth: true,
       solicitudes
     });

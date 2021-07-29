@@ -38,6 +38,7 @@ async function getSolicitudByUuid(req, res) {
             title: "Detalles de Reclamo",
             auth: true,
             type: req.session.type,
+            user: req.session.user,
             solicitud
         })
     } catch(err) {

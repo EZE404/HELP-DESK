@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 	_.forIn(req.body, function (value, key) {
 		if (typeof req.body[key] == 'string') {
 			req.body[key] = value.trim();
-		};
+		}
 	});
 	return next();
 });
