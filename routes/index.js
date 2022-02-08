@@ -20,7 +20,7 @@ router.get('/', async function (req, res) {
 
     res.redirect('/login');
   
-  };
+  }
 
 });
 

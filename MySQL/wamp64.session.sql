@@ -1,11 +1,26 @@
-select h.* from historials h natural join (select
-  SolicitudId,
-  max(fecha) as fecha
-from historials
-where SolicitudId not in (
-    SELECT distinct SolicitudId
+/* SELECT h.id
+FROM historials h
+  natural JOIN (
+    SELECT solicitudid,
+      MAX(fecha) AS fecha
     FROM historials
-    WHERE estado = 'Solucionado'
-  )
-and AreaId = 4
-group by SolicitudId) a
+    GROUP BY solicitudid
+  ) a
+WHERE h.areaid = 4
+  AND h.estado != 'Solucionado' */
+
+SELECT h.SolicitudId, h.detalle, h.fecha, b.cantidad
+FROM historials h NATURAL JOIN
+  (SELECT SolicitudId, max(fecha) as fecha
+  FROM historials
+  GROUP BY SolicitudId) a
+NATURAL JOIN
+  (SELECT SolicitudId, count(*) as cantidad
+  FROM historials
+  WHERE estado = 'Derivado'
+  GROUP BY SolicitudId) b
+
+/* SELECT count(*)
+FROM notificacions
+WHERE SolicitudId = 1
+AND fecha = (SELECT MAX(fecha) FROM historials WHERE SolicitudId = 1) */
