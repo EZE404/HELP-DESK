@@ -4,9 +4,9 @@ block content
   .container.p-5
     .row
       .col.mx-auto
-        table.table.table-dark.table-hover.table-striped
+        table#table_id
           thead
-            tr.table-dark
+            tr
               th Fecha
               th Tipo
               th Descripcion
@@ -23,5 +23,3 @@ block content
                   td=solicitud.Historials[0].prioridad
                   td=solicitud.Historials[0].estado
                   td=solicitud.Historials[0].detalle
-          
-
