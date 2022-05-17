@@ -14,6 +14,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      apellido: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       dni: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -52,7 +56,12 @@ module.exports = {
           },
           key: 'id'
         },
-      }
+      },
+      admin: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
     }, {
       charset: "utf8",
       collate: "utf8_spanish_ci"
