@@ -8,7 +8,7 @@ var app = require('../app');
 var debug = require('debug')('help-desk:server');
 var http = require('http');
 const db = require('../models/index');
-const { truncateSync } = require('fs');
+//const { truncateSync } = require('fs');
 const clg = require('../tools/clg');
 /**
  * Get port from environment and store in Express.

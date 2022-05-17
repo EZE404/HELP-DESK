@@ -1,42 +1,18 @@
-nav.navbar.navbar-light.bg-light
+nav.navbar.navbar-light.bg-light.py-2
 	a.navbar-brand(href='/')
-		img.d-inline-block.align-top(src='/favicon.png' width='40' alt='')
-
+		img.d-inline-block.align-top(src='/logo.png' height='40' alt='HELPDESK')
+	|	
 	if (!auth) 
 		div
 			a.btn.btn-sm.btn-outline-primary.my-2.mx-2.mr-auto(href='/login/signup') Registrarse
 			a.btn.btn-sm.btn-primary.my-2.mx-2.mr-auto(href='/login') Ingresar
 	else
-		div
-			span.text-dark.ts-1 Hola, #{user.email}
-			a.btn.btn-primary.my-2.mx-2.mr-auto(href='/close') Salir
-
-if (user)
-	nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
-		.container-fluid
-			a.navbar-brand(href='#') Navbar
-			button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarColor02' aria-controls='navbarColor02' aria-expanded='false' aria-label='Toggle navigation')
-				span.navbar-toggler-icon
-			#navbarColor02.collapse.navbar-collapse
-				ul.navbar-nav.me-auto
-					li.nav-item
-						a.nav-link.active(href='#')
-							| Home
-							span.visually-hidden (current)
-					li.nav-item
-						a.nav-link(href='#') Features
-					li.nav-item
-						a.nav-link(href='#') Pricing
-					li.nav-item
-						a.nav-link(href='#') About
-					li.nav-item.dropdown
-						a.nav-link.dropdown-toggle(data-bs-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false') Dropdown
-						.dropdown-menu
-							a.dropdown-item(href='#') Action
-							a.dropdown-item(href='#') Another action
-							a.dropdown-item(href='#') Something else here
-							.dropdown-divider
-							a.dropdown-item(href='#') Separated link
-				form.d-flex
-					input.form-control.me-sm-2(type='text' placeholder='Search')
-					button.btn.btn-danger.my-2.my-sm-0(type='submit') Search
+		div.dropdown
+			//span.text-dark.ts-1 Hola, #{user.email}
+			a.btn.btn-sm.btn-primary.dropdown-toggle(data-bs-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false') Hola, #{user.email}
+			.dropdown-menu
+				a.dropdown-item(href='#') Perfil
+				a.dropdown-item(href='#') Cambiar contraseña
+				.dropdown-divider
+				a.dropdown-item(href='/close') Salir
+			//a.btn.btn-sm.btn-primary.my-2.mx-2.mr-auto(href='/close') Salir

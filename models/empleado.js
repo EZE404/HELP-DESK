@@ -29,6 +29,24 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    apellido: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: 'apellido',
+      validate: {
+        notNull: {
+          msg: "El apellido no puede ser nulo"
+        },
+        notEmpty: {
+          args: true,
+          msg: "El apellido no puede estar vacío"
+        },
+        is: {
+          args: /^[a-zA-Z]+([\s][a-zA-Z]+)*$/g,
+          msg: "El apellido solo puede contener letras sin espacios dobles, ni espacios al principio y fin"
+        }
+      }
+    },
     dni: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -141,7 +159,20 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       }
-    }    
+    },
+    admin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: 0,
+      field: 'admin',
+      validate: {
+        validar(valor) {
+          if (typeof valor != 'boolean') {
+            throw new Error("Admin debe ser un booleano");
+          }
+        }
+      }
+    }   
   }, {});
 
   Empleado.associate = (models) => {

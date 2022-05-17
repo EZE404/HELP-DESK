@@ -39,7 +39,7 @@ app.use((req, res, next) => {
 app.use(session({ secret: 'ezequiel', store: myStore, resave: true, saveUninitialized: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.locals.moment = require("moment");
-app.use(favicon(path.join(__dirname, "public", "favicon.png")));
+app.use(favicon(path.join(__dirname, "public", "favicon_new.png")));
 
 // routes
 app.use("/", require("./routes/index"));
