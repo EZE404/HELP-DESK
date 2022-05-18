@@ -1,12 +1,11 @@
 var express = require('express');
 var router = express.Router();
-
-const controller = require('../controllers/controllerEmpleado');
+const clg = require('../tools/clg');
 
 //########## MIDDLEWARE DE AUTORIZACIÓN ##########
 router.use((req, res, next) => {
   if(req.session.type == "empleado") {
-    if (!req.session.user.admin) {
+    if (req.session.user.admin) {
       return next();
     }
   }
@@ -15,13 +14,13 @@ router.use((req, res, next) => {
 })
 //---------- MIDDLEWARE DE AUTORIZACIÓN ----------
 
-// TRAER TODOS LOS EMPLEADOS
-//router.get('/', controller.todos);
-
 router.get('/', (req, res) => {
-  return res.send('200', "Hola desde /empleado");
+  // ACÁ DEBERÍA RENDERIZAR SOLO LOS BOTONES AREAS, EMPLEADOS Y CLIENTES
+
+  return res.render('admin/index', {title: "Administrador", type:"admin", user:req.session.user});
+
+  //return res.send('200', "Hola desde /admin")
 })
 
-router.post('/crear', controller.crear);
 
 module.exports = router;

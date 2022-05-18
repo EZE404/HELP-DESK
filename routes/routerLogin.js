@@ -19,7 +19,7 @@ router.use(async (req, res, next) => {
 
     };
 
-    await clg.info('Ya está logueado. Redirección a solicitudes');
+    await clg.info('Ya está logueado. Redirección a index');
     await clg.objeto(req.session.user, 'Usuario logueado');
     return res.redirect('/');
 

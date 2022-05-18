@@ -2,7 +2,7 @@ nav.navbar.navbar-light.bg-light.py-2
 	a.navbar-brand(href='/')
 		img.d-inline-block.align-top(src='/logo.png' height='40' alt='HELPDESK')
 	|	
-	if (!auth) 
+	if (!user) 
 		div
 			a.btn.btn-sm.btn-outline-primary.my-2.mx-2.mr-auto(href='/login/signup') Registrarse
 			a.btn.btn-sm.btn-primary.my-2.mx-2.mr-auto(href='/login') Ingresar
@@ -10,7 +10,7 @@ nav.navbar.navbar-light.bg-light.py-2
 		div.dropdown
 			//span.text-dark.ts-1 Hola, #{user.email}
 			a.btn.btn-sm.btn-primary.dropdown-toggle(data-bs-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false') Hola, #{user.email}
-			.dropdown-menu
+			.dropdown-menu.mr-auto
 				a.dropdown-item(href='#') Perfil
 				a.dropdown-item(href='#') Cambiar contraseña
 				.dropdown-divider

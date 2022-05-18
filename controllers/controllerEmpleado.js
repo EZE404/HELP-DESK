@@ -39,6 +39,7 @@ async function login(req, res) {
                 //configurar la session para no autenticar en cada requerimiento
                 req.session.user = user;
                 req.session.type = "empleado";
+                await clg.objeto(user, "ACÁ VIENDO EL USER EMPLEADO RECUPERADO");
 
                 await clg.info(`${user.email} autenticado`);
                 //return res.status(200).json({ message: "Usuario Autenticado" });
@@ -65,7 +66,7 @@ async function login(req, res) {
 };
 
 //##############################################################
-//################# BUSCAR CLIENTE #############################
+//################# BUSCAR EMPELADOS ###########################
 
 async function todos(req, res) {
     console.log('Entró a funcion todos() de controllerEmpleado');

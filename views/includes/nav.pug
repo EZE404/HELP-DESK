@@ -1,22 +1,12 @@
 if (type=="admin")
-  ul.nav.justify-content-center
+  ul.nav.justify-content-center.m-3
     li.nav-item
-      a.nav-link(href='#') Areas
+      a.nav-link.btn.btn-info(href='/admin/areas') Areas
     li.nav-item
-      a.nav-link(href='#') Empleados
+      a.nav-link.btn.btn-info(href='/admin/empleados') Empleados
+    li.nav-item
+      a.nav-link.btn.btn-info(href='/admin/clientes') Clientes
 if (type=="cliente")
-  .container-flex.p-1.bg-light
-    <ul class="nav justify-content-center">
-      <li class="nav-item">
-        <a class="nav-link btn btn-sm btn-primary" href="#">Active</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li>
-    </ul>
+  ul.nav.justify-content-center.m-2
+    li.nav-item
+      a.nav-link.btn.btn-info(href='/cliente/solicitud') Nueva solicitud

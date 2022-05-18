@@ -44,10 +44,16 @@ app.use(favicon(path.join(__dirname, "public", "favicon_new.png")));
 // routes
 app.use("/", require("./routes/index"));
 app.use('/login', require('./routes/routerLogin'));
-app.use("/clientes", require("./routes/routerCliente"));
-app.use("/solicitudes", require("./routes/routerSolicitud"));
-app.use("/empleados", require("./routes/routerEmpleado"));
-app.use("/areas", require("./routes/routerArea"));
+
+// NUEVO FORMATO DE ADMIN, CLIENTE O EMPLEADO
+app.use("/admin", require("./routes/routerAdmin"));
+app.use("/cliente", require("./routes/routerCliente"));
+app.use("/empleado", require("./routes/routerEmpleado"));
+
+//app.use("/clientes", require("./routes/routerCliente"));
+//app.use("/solicitudes", require("./routes/routerSolicitud"));
+//app.use("/empleados", require("./routes/routerEmpleado"));
+//app.use("/areas", require("./routes/routerArea"));
 app.use("/validar", require('./routes/routerTestValidaciones')); //! SOLO PARA TESTEAR VALIDACIONES DE SEQUELIZE
 
 // CERRAR SESIÓN

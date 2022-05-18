@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+  .container.p-5
+    .row
+      .col.mx-auto
+        table#table_id
+          thead
+            tr
+              th Fecha
+              th Tipo
+              th Descripcion
+          tbody
+            each solicitud in solicitudes
+              tr
+                td
+                  a(href="/cliente/tracking/"+solicitud.uuid) #{moment(solicitud.fechaAlta).format('DD/MM/YYYY')}
+                td #{solicitud.tipo}
+                td #{solicitud.descripcion}
+
+block datatable
+  script(src="/javascripts/datatable.js")

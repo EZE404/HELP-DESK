@@ -1,5 +1,6 @@
 {
     "eslint.enable": false,
+    "cSpell.enabled": false,
     "sqltools.connections": [
         {
             "mysqlOptions": {
