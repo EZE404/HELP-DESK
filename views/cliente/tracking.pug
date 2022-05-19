@@ -1,0 +1,35 @@
+extends ../layout
+
+block content
+  
+
+  .container.p-5
+    .row
+      <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">Movimientos de solicitud</h4>
+        <p>#{solicitud.descripcion}</p>
+        <hr>
+        <p class="mb-0">SOLICITUD: #{solicitud.uuid}</p>
+      </div>
+      hr
+    .row
+      .col.mx-auto
+        table#table_id
+          thead
+            tr
+              th Fecha
+              th Área
+              th Prioridad
+              th Estado
+              th Detalle
+          tbody
+            each h in solicitud.Historials
+              tr
+                td(width="100px") #{moment(h.fecha).format('DD/MM/YYYY HH:mm')}
+                td(width="150px") #{h.Area.nombre}
+                td(width="120px") #{h.prioridad}
+                td(width="120px") #{h.estado}
+                td #{h.detalle}
+
+block datatable
+  script(src="/javascripts/datatable.js")

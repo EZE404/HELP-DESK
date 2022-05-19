@@ -44,7 +44,7 @@ app.use(favicon(path.join(__dirname, "public", "favicon_new.png")));
 // routes
 app.use("/", require("./routes/index"));
 app.use('/login', require('./routes/routerLogin'));
-
+app.use("/cuenta", require('./routes/routerCuenta'));
 // NUEVO FORMATO DE ADMIN, CLIENTE O EMPLEADO
 app.use("/admin", require("./routes/routerAdmin"));
 app.use("/cliente", require("./routes/routerCliente"));

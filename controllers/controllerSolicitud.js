@@ -14,14 +14,13 @@ async function form(req, res) {
 //#######################################################
 //############# GET SOLICITUD BY UUID ###################
 
-async function getSolicitudByUuid(req, res) {
+async function getSolicitudByUuid(uuid) {
     await clg.info('Ingreso a handler para getSolicitudByUuid');
-    await console.log('params.uuid', req.params.uuid);
 
     try {
         const solicitud = await Solicitud.findOne({
             where: {
-                uuid: req.params.uuid
+                uuid: uuid
             },
             include: {
                 model: Historial,
@@ -34,13 +33,7 @@ async function getSolicitudByUuid(req, res) {
             return clg.info('Fallo al traer solicitud con historiales en getSolicitudByUuid');
         };
 
-        return res.render('models/cliente_solicitud', {
-            title: "Detalles de Reclamo",
-            auth: true,
-            type: req.session.type,
-            user: req.session.user,
-            solicitud
-        })
+        return solicitud
     } catch(err) {
 
     };
@@ -173,14 +166,11 @@ async function todo(req, res) {
 
 //############## CREAR EXPERIMENTAL #######################
 
-async function crear(req, res) {
+async function crear(form) {
 
-    const { tipo, descripcion } = req.body;
-    const ClienteId = req.session.user.id;
+    let res = 0
 
-    if (!req.session.user) {
-        return res.redirect('/login');
-    };
+    const { tipo, descripcion, userId } = form;
 
     if (!tipo || !descripcion) {
         return res.send('no me toques el código');
@@ -191,7 +181,7 @@ async function crear(req, res) {
         const area = await Area.findOne({
             where: {
                 nombre: {
-                    [Op.like]: '%HELP DESK%'
+                    [Op.like]: '%HELPDESK%'
                 }
             }
         });
@@ -201,7 +191,7 @@ async function crear(req, res) {
         };
 
         const solicitud = await Solicitud.create({
-            ClienteId,
+            ClienteId : userId,
             tipo,
             descripcion,
             Historials: [
@@ -216,21 +206,22 @@ async function crear(req, res) {
 
 
         if(!solicitud) {
-            return res.send('no funcó');
+            return res;
+            //return res.send('no funcó');
         };
 
-
-        return res.json(solicitud);
+        res = 1;
+        return res;
 
     } catch (err) {
-        return res.json(err);
+        return err;
     };
 
 };
 
 //#######################################################
 
-async function getByClienteId(id) {
+async function getAllByClienteId(id) {
     try {
 
         const solicitudes = await Solicitud.findAll({
@@ -257,6 +248,6 @@ module.exports = {
     form,
     todo,
     crear,
-    getByClienteId,
+    getAllByClienteId,
     getSolicitudByUuid
 }

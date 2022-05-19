@@ -36,9 +36,23 @@ async function login(req, res) {
     
             if (validPassword) {
 
+                const userSession = {
+                    id: user.id,
+                    nombre: user.nombre,
+                    apellido: user.apellido,
+                    dni: user.dni,
+                    email: user.email,
+                    pass: user.pass,
+                    telefono: user.telefono,
+                    fechaAlta: user.fechaAlta,
+                    verificado: user.verificado,
+                    AreaId: user.AreaId,
+                    verificado: user.verificado,
+                    admin: user.admin,
+                    type: "empleado"
+                }
                 //configurar la session para no autenticar en cada requerimiento
-                req.session.user = user;
-                req.session.type = "empleado";
+                req.session.user = userSession;
                 await clg.objeto(user, "ACÁ VIENDO EL USER EMPLEADO RECUPERADO");
 
                 await clg.info(`${user.email} autenticado`);

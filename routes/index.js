@@ -18,8 +18,10 @@ router.get('/', async function (req, res) {
     }); */
 
   if(req.session.user) {
+    console.log("EN EL CHEQUEO DE USUARIO (HAY SESSION.USER)")
 
-    if(req.session.type == "empleado") {
+    console.log(req.session.user);
+    if(req.session.user.type == "empleado") {
       const admin = req.session.user.admin;
       if (admin) {
         return res.redirect('/admin');
@@ -28,11 +30,12 @@ router.get('/', async function (req, res) {
       }
     }
 
-    if(req.session.type == "cliente") {
+    if(req.session.user.type == "cliente") {
       return res.redirect('/cliente');
     }
 
   } else {
+    console.log("EN EL ELSE DE HOST/ (NO HAY USER)")
 
     // Acá debería renderizar un index con tracking por código de solicitud
     return res.render('home');

@@ -7,16 +7,27 @@ block content
         table#table_id
           thead
             tr
-              th Fecha
-              th Tipo
+              th(width="90px") Fecha
+              th(width="100px") Tipo
               th Descripcion
+              th(width="100px") Prioridad 
+              th(width="100px") Estado
+              th Detalle
           tbody
             each solicitud in solicitudes
               tr
                 td
-                  a(href="/cliente/tracking/"+solicitud.uuid) #{moment(solicitud.fechaAlta).format('DD/MM/YYYY')}
+                  a(href="/cliente/tracking/"+solicitud.uuid) #{moment(solicitud.fechaAlta).format('DD/MM/YYYY HH:mm')}
                 td #{solicitud.tipo}
-                td #{solicitud.descripcion}
+                td #{solicitud.descripcion.slice(0, 90) + "..."}
+                if (solicitud.Historials.length)
+                  td=solicitud.Historials[0].prioridad
+                  td=solicitud.Historials[0].estado
+                  td=solicitud.Historials[0].detalle
+                else
+                  td
+                  td
+                  td Aún no atendida
 
 block datatable
   script(src="/javascripts/datatable.js")

@@ -9,10 +9,10 @@ nav.navbar.navbar-light.bg-light.py-2
 	else
 		div.dropdown
 			//span.text-dark.ts-1 Hola, #{user.email}
-			a.btn.btn-sm.btn-primary.dropdown-toggle(data-bs-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false') Hola, #{user.email}
+			a.btn.btn-sm.btn-success.dropdown-toggle(data-bs-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false') Hola, #{user.email}
 			.dropdown-menu.mr-auto
-				a.dropdown-item(href='#') Perfil
-				a.dropdown-item(href='#') Cambiar contraseña
+				a.dropdown-item(href="/cuenta") Cuenta
+				a.dropdown-item(href='/cuenta/pass') Cambiar contraseña
 				.dropdown-divider
 				a.dropdown-item(href='/close') Salir
 			//a.btn.btn-sm.btn-primary.my-2.mx-2.mr-auto(href='/close') Salir

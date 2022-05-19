@@ -5,7 +5,10 @@ const controller = require('../controllers/controllerEmpleado');
 
 //########## MIDDLEWARE DE AUTORIZACIÓN ##########
 router.use((req, res, next) => {
-  if(req.session.type == "empleado") {
+  if (!req.session.user) {
+    return res.redirect('/login')
+  }
+  if(req.session.user.type == "empleado") {
     if (!req.session.user.admin) {
       return next();
     }
