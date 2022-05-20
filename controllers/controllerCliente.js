@@ -151,6 +151,32 @@ async function crear(req, res) {
 //##############################################################
 //################# EDITAR CLIENTE #############################
 
+async function updateClient(form) {
+
+    let result = -1;
+    try {
+        const updatedRows = await Cliente.update({
+            nombre: form.nombre,
+            telefono: form.telefono,
+            email: form.email
+        },
+        {
+            where: {
+                dni: form.dni
+            }
+        });
+
+        console.log("cliente actualizado!");
+
+        result = updatedRows[0];
+        return result;
+        
+    } catch (error) {
+        throw error;
+    }
+
+}
+
 
 //##############################################################
 //################# BAJA CLIENTE ###############################
@@ -161,5 +187,6 @@ async function crear(req, res) {
 module.exports = {
     login,
     todos,
-    crear
+    crear,
+    updateClient
 }
