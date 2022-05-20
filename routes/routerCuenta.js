@@ -50,6 +50,53 @@ router.post('/', async (req, res) => {
     return res.send(error);
   }
 
+})
+
+router.get('/pass', (req, res) => {
+  return res.render('cuenta/pass', {
+    title: "Cambiar contraseña",
+    user: req.session.user
+  })
+})
+
+router.post('/pass', async (req, res) => {
+  const form = req.body;
+  form.userId = req.session.user.id;
+  form.dni = req.session.user.dni;
+
+  let result;
+
+  if (req.session.user.type == "cliente") {
+    result = await controllerCliente.updatePass(form);
+  } else if (req.session.user.type == "empleado") {
+    result = await controllerEmpleado.updatePass(form);
+  }
+
+  if (result == 1) {
+    return res.render('cuenta/pass', {
+      title: "Cambiar contraseña",
+      user: req.session.user,
+      msg: "Contraseña actualizada"
+    })
+  } else if (result == 0) {
+    return res.render('cuenta/pass', {
+      title: "Cambiar contraseña",
+      user: req.session.user,
+      msg: "No se actualizó contraseña. Intente nuevamente."
+    })
+  } else if (result == -2){
+    return res.render('cuenta/pass', {
+      title: "Cambiar contraseña",
+      user: req.session.user,
+      msg: "Contraseña actual incorrecta."
+    })
+  } else {
+    return res.render('cuenta/pass', {
+      title: "Cambiar contraseña",
+      user: req.session.user,
+      msg: "Ocurrió un error. " + result
+    })
+  }
 
 })
 

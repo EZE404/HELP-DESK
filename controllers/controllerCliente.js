@@ -178,6 +178,46 @@ async function updateClient(form) {
 }
 
 
+async function updatePass(form) {
+    let result = -1;
+
+    try {
+        const findUser = await Cliente.findOne({
+            where: {
+                dni: form.dni
+            }
+        });
+
+        if (findUser) {
+            // compara password del usuario con password hasheado en la BD
+            const validPassword = await bcrypt.compare(form.pass, findUser.pass);
+            if (!validPassword) {
+                return -2;
+            }
+        }
+
+        // generar salt para hashear el password
+        const salt = await bcrypt.genSalt(10);
+
+        // hasheamos el password con salt anexado
+        const pass_enc = await bcrypt.hash(form.newpass, salt);
+
+        const updatedRows = await Cliente.update({
+            pass: pass_enc
+        },
+        {
+            where: {
+                dni: form.dni
+            }
+        });
+
+        result = updatedRows[0];
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
+
 //##############################################################
 //################# BAJA CLIENTE ###############################
 
@@ -188,5 +228,6 @@ module.exports = {
     login,
     todos,
     crear,
-    updateClient
+    updateClient,
+    updatePass
 }
