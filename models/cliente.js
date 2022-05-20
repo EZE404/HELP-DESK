@@ -129,7 +129,7 @@ module.exports = (sequelize, DataTypes) => {
       field: 'verificado',
       validate: {
         validar(valor) {
-          if (typeof valor == 'boolean') {
+          if (typeof valor !== 'boolean') {
             throw new Error("Verificado debe ser un booleano");
           }
         }

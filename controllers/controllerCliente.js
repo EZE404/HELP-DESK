@@ -8,15 +8,10 @@ const clg = require('../tools/clg');
 
 async function login(req, res) {
 
-    await clg.info('Ingreso a handler para Cliente POST - /login');
-    
     const body = req.body;
-    await clg.objeto(body, 'Body del formulario');
 
     if (!body.email || !body.pass) {
-
         return res.send('Dejá de tocarme el código del lado del cliente, pa');
-    
     }
 
     try {
@@ -31,6 +26,12 @@ async function login(req, res) {
         
         if (user) {
 
+            if (!user.verificado) {
+                return res.render('login/login', {
+                    title: "Ingresar",
+                    msg: "Espere ser aprobado."
+                })
+            }
             // compara password del usuario con password hasheado en la BD
             const validPassword = await bcrypt.compare(body.pass, user.pass);
     
@@ -59,14 +60,20 @@ async function login(req, res) {
             } else {
 
                 await clg.info('Contraseña inválida');
-                return res.status(400).json({ error: "Password Inválido" });
+                return res.render('login/login', {
+                    title: "Ingresar",
+                    msg: "Datos inválidos"
+                })
 
             }
 
         } else {
 
             await clg.info(`El usuario ${body.email} no existe`);
-            return res.status(401).json({ error: `El usuario ${body.email} no existe` });
+            return res.render('login/login', {
+                title: "Ingresar",
+                msg: "No hay usuario registrado con este e-mail."
+            })
 
         };
 
@@ -124,7 +131,10 @@ async function crear(req, res) {
             if (clientes_dni_email[0].email == email) {
                 aviso.email = `Ya existe un cliente con el correo ${email}`
             }
-            return res.status(500).json(aviso);
+            return res.render('login/signup', {
+                title: "Registrarse",
+                msg: aviso.email || aviso.dni
+            });
         };
         console.log('Pasó línea 55');
         // generar salt para hashear el password
@@ -142,7 +152,10 @@ async function crear(req, res) {
             pass: pass_enc
         });
         clg.info(cliente_creado instanceof Cliente)
-        return res.status(200).json(cliente_creado)
+        return res.render('login/login', {
+            title: "Ingresar",
+            msg: "Cuenta creada. Espere ser aprobado."
+        })
     } catch (error) {
         return res.status(500).json(error);
     }
