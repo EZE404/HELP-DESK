@@ -5,100 +5,89 @@ const { Op } = require('sequelize');
 //##############################################################
 //################### BUSCAR AREAS #############################
 
-async function todos(req, res) {
+async function getAll(req, res) {
     console.log('Entró a funcion todos() de controllerArea');
     try {
         const areas = await Area.findAll();
-        res.status(200).json(areas);
+        return areas;
     } catch (error) {
-        res.status(500).json(error);
+        return res.send(error)
     };
 };
 
 //##############################################################
 //################### BUSCAR AREA #############################
 
-async function area(req, res) {
-    console.log('Entró a funcion area() de controllerArea');
-    console.log(req.params);
-    const areaId = req.params.id;
-
-
+async function getById(id) {
     try {
-        const area = await Area.findByPk(areaId, {
+        const area = await Area.findByPk(id, {
             include: Empleado
         });
-        res.status(200).json(area);
+        return area;
     } catch (error) {
-        res.status(500).json(error);
+        return res.send(error);
     };
 };
 
 //##############################################################
 //#################### REGISTRO AREA ###########################
 
-async function crear(req, res) {
-    console.log('Entró a función crear() de controllerCliente');
-    console.log(req.body);
-    const { nombre } = req.body;
+async function newArea(form) {
 
+    let result = -1
     try {
         const area_buscada = await Area.findAll({
             where: {
-                nombre
+                nombre: form.nombre
             }
         });
 
         if (area_buscada.length) {
-            let aviso = {};
-
-            aviso.msj = `Ya existe un area para: ${area_buscada[0].nombre}`
-            return res.status(500).json(aviso);
+            result = -2;
+            return result;
         };
 
-        const area_creada = await Area.create({ nombre });
+        const area_creada = await Area.create({ nombre: form.nombre });
 
-        return res.status(200).json(area_creada)
+        if (area_creada.nombre) {
+            result = 1;
+            return result;
+        }
+        return result
     } catch (error) {
-        return res.status(500).json(error);
+        return res.send(error);
     }
 };
 
 //##############################################################
 //#################### EDITAR AREA #############################
 
-async function editar(req, res) {
-    console.log('Entró a función editar() de controllerCliente');
-    console.log(req.body);
-    const { id, nombre } = req.body;
+async function updateAreaName(form) {
 
+    let result = -1
     try {
-        const area_buscada = await Area.findByPk(id);
-
+        const area_buscada = await Area.findByPk(form.id);
+        console.log("area_buscada", area_buscada);
         if (!area_buscada) {
-            let aviso = {};
-
-            aviso.msj = `No existe tal área`
-            return res.status(500).json(aviso);
+            return result;
         };
 
-        const area_actualizada = await Area.update({
-            nombre
+        const affectedRows = await Area.update({
+            nombre: form.nombre
         }, {
             where: {
-                id
+                id: form.id
             }
         });
 
-        console.log(area_actualizada);
+        console.log("affectedRows " + affectedRows[0]);
 
-        let respuesta = {}
-        respuesta.affectedRows = area_actualizada[0];
-        return res.status(200).json(respuesta);
+        result = affectedRows[0];
+        return result;
     
     } catch (error) {
     
-        return res.status(500).json(error);
+        return res.send(error);
     
     }
 };
@@ -110,8 +99,8 @@ async function editar(req, res) {
 //##############################################################
 
 module.exports = {
-    todos,
-    area,
-    crear,
-    editar
+    getAll,
+    getById,
+    newArea,
+    updateAreaName
 }

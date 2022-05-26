@@ -9,7 +9,7 @@ block content
             .form-group
               label.form-label(for='tipo') Tipo de Reclamo
               select.form-control(name='tipo', id='tipo' required)
-                  option(default selected disabled required) - seleccione un tipo -
+                  //option(default selected disabled required) - seleccione un tipo -
                   each val in ['compra' , 'reclamo' , 'incidente', 'servicio tecnico']
                     option(value=val) #{val}
             .form-group

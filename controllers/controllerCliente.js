@@ -86,13 +86,30 @@ async function login(req, res) {
 //##############################################################
 //################## BUSCAR CLIENTES ###########################
 
-async function todos(req, res) {
+async function getAll(req, res) {
     console.log('Entró a funcion todos() de controllerCliente');
     try {
         const clientes = await Cliente.findAll();
-        res.status(200).json(clientes);
+        return clientes;
     } catch (error) {
-        res.status(500).json(error);
+        return error;
+    };
+};
+//##############################################################
+//############## BUSCAR CLIENTE POR UUID #######################
+
+async function getClientByUuid(uuid) {
+    console.log('Entró a funcion getClientByUuid() de controllerCliente');
+    try {
+        const user = await Cliente.findOne({
+            where: {
+                uuid: uuid
+            }
+        });
+        console.log("uuid client", user.nombre);
+        return user;
+    } catch (error) {
+        return error;
     };
 };
 
@@ -190,7 +207,29 @@ async function updateClient(form) {
 
 }
 
+async function updateClientStatus(form) {
 
+    let result = -1;
+    try {
+        const updatedRows = await Cliente.update({
+            verificado: form.verificado
+        },
+            {
+                where: {
+                    uuid: form.uuid
+                }
+            });
+
+        console.log("cliente actualizado!");
+
+        result = updatedRows[0];
+        return result;
+
+    } catch (error) {
+        throw error;
+    }
+
+}
 async function updatePass(form) {
     let result = -1;
 
@@ -239,8 +278,10 @@ async function updatePass(form) {
 
 module.exports = {
     login,
-    todos,
+    getAll,
+    getClientByUuid,
     crear,
     updateClient,
+    updateClientStatus,
     updatePass
 }

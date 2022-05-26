@@ -1,0 +1,30 @@
+extends ../layout
+block content
+  if(msg)
+    .row.mx-auto
+      .col-5.mx-auto.mt-4.text-center
+        .alert.alert-info.alert-dismissible.fade.show(role='alert')
+          strong #{msg} 
+          button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close') X
+  .row.mx-auto
+    .col-5.mx-auto.my-4
+      .card
+        .card-body.p-4
+          .alert.alert-info(role="alert")
+            p Nombre: #{client.nombre}
+            p E-mail: #{client.email}
+            p DNI: #{client.dni}
+            p TEL: #{client.telefono}
+            p Fecha de Alta: #{moment(client.fechaAlta).format('DD/MM/YYYY HH:mm')}
+          form(action="/admin/clientes/"+client.uuid method="post")
+            .form-check
+              - const valid = client.verificado ? true : false
+              label.form-label(for="verificado") Habilitado
+              br
+              input.form-check-input#si(type="radio", name="verificado", value=1, checked=valid)
+              label.form-check-label(for="si") SÍ
+              br
+              input.form-check-input#no(type="radio", name="verificado", value=0, checked=!valid)
+              label.form-check-label(for="no") NO
+            .form-group.text-center
+              input.btn.btn-primary(type="submit" value="Actualizar")

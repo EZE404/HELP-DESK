@@ -3,17 +3,20 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('areas', [{
-       nombre: 'HELPDESK'
-     },{
-       nombre: 'CALIDAD'
-     }, {
-       nombre: 'ADMINISTRACION'
-     }, {
-       nombre: 'SERVICIO TECNICO'
-     }, {
-       nombre: 'RRHH'
-     }], {});
-  
+      nombre: 'HELPDESK',
+      editable: false
+    }, {
+      nombre: 'CALIDAD',
+      editable: false
+    }, {
+      nombre: 'ADMINISTRACION',
+      editable: false
+    }, {
+      nombre: 'SERVICIO TECNICO'
+    }, {
+      nombre: 'RRHH'
+    }], {});
+
   },
 
   down: async (queryInterface, Sequelize) => {

@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+  .container.p-5
+    .row.mb-4
+      a.btn.btn-sm.btn-primary(href="/admin/area") AGREGAR
+    .row
+      .col.mx-auto
+        table#table_id
+          thead
+            tr
+              th Nombre
+              th Detalle
+          tbody
+            each a in areas
+              tr
+                td #{a.nombre}
+                td
+                  if (a.editable)
+                    a(href="/admin/areas/"+a.id) Editar
+                  else
+                    | No editable
+
+
+block datatable
+  script(src="/javascripts/datatable.js")

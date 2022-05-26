@@ -1,0 +1,38 @@
+extends ../layout
+
+block content
+  .container.p-5
+    .row.mb-4
+        a.btn.btn-sm.btn-primary(href="/admin/empleado" role="button") AGREGAR
+    .row
+      .col.mx-auto
+        table#table_id
+          thead
+            tr
+              th(width="120px") Nombre
+              th(width="120px") Apellido
+              th(width="90px") DNI
+              th EMAIL
+              th(width="90px") Teléfono
+              th(width="90px") Fecha Alta
+              th(width="50px") Aprobado
+              th(width="50px") Detalle
+          tbody
+            each e in empleados
+              tr
+                td #{e.nombre}
+                td #{e.apellido}
+                td #{e.dni}
+                td #{e.email}
+                td #{e.telefono}
+                td #{moment(e.fechaAlta).format('DD/MM/YYYY HH:mm')}
+                if (e.verificado)
+                  td(class="bg-success text-center") Sí
+                else
+                  td(class="bg-warning text-center") No
+                td
+                  a(href="/admin/empleados/"+e.id) Editar
+
+
+block datatable
+  script(src="/javascripts/datatable.js")

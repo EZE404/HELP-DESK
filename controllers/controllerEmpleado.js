@@ -8,10 +8,10 @@ const clg = require('../tools/clg');
 
 async function login(req, res) {
 
-    await clg.info('Ingreso a handler para Empleado POST - /loginEmpleado');
+    //await clg.info('Ingreso a handler para Empleado POST - /loginEmpleado');
     
     const body = req.body;
-    await clg.objeto(body, 'Body del formulario');
+    //await clg.objeto(body, 'Body del formulario');
 
     if (!body.email || !body.pass) {
 
@@ -27,7 +27,7 @@ async function login(req, res) {
             }
         });
 
-        await clg.objeto(user, 'Empleado.findOne');
+        //await clg.objeto(user, 'Empleado.findOne');
         
         if (user) {
 
@@ -53,7 +53,7 @@ async function login(req, res) {
                 }
                 //configurar la session para no autenticar en cada requerimiento
                 req.session.user = userSession;
-                await clg.objeto(user, "ACÁ VIENDO EL USER EMPLEADO RECUPERADO");
+                //await clg.objeto(user, "ACÁ VIENDO EL USER EMPLEADO RECUPERADO");
 
                 await clg.info(`${user.email} autenticado`);
                 //return res.status(200).json({ message: "Usuario Autenticado" });
@@ -62,14 +62,20 @@ async function login(req, res) {
             } else {
 
                 await clg.info('Contraseña inválida');
-                return res.status(400).json({ error: "Password Inválido" });
+                return res.render('login/login', {
+                    title: "Ingresar",
+                    msg: "Datos inválidos"
+                })
 
             }
 
         } else {
 
             await clg.info(`El usuario ${body.email} no existe`);
-            return res.status(401).json({ error: `El usuario ${body.email} no existe` });
+            return res.render('login/login', {
+                title: "Ingresar",
+                msg: "No hay empleado registrado con este e-mail."
+            })
 
         };
 
@@ -82,11 +88,17 @@ async function login(req, res) {
 //##############################################################
 //################# BUSCAR EMPELADOS ###########################
 
-async function todos(req, res) {
+async function getAll(adminEmail) {
     console.log('Entró a funcion todos() de controllerEmpleado');
     try {
-        const empleados = await Empleado.findAll();
-        res.status(200).json(empleados);
+        const empleados = await Empleado.findAll({
+            where: {
+                email : {
+                    [Op.notLike] : adminEmail
+                }
+            }
+        });
+        return empleados;
     } catch (error) {
         res.status(500).json(error);
     };
@@ -179,6 +191,6 @@ async function editar(req, res) {
 
 module.exports = {
     login,
-    todos,
+    getAll,
     crear
 }
