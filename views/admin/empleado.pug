@@ -1,0 +1,45 @@
+extends ../layout
+block content
+  if(msg)
+    .row.mx-auto
+      .col-5.mx-auto.mt-4.text-center
+        .alert.alert-info.alert-dismissible.fade.show(role='alert')
+          strong #{msg} 
+          button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close') X
+  .row.mx-auto
+    .col-5.mx-auto.my-4
+      .card
+        .card-body.p-4
+          .alert.alert-info(role="alert")
+            p E-mail: #{empleado.email}
+            p Fecha de Alta: #{moment(empleado.fechaAlta).format('DD/MM/YYYY HH:mm')}
+          form(action="/admin/empleados/"+empleado.id method="post")
+            .form-group
+              label(for="nombre") Nombre
+              input.form-control#nombre(type="text" name="nombre" placeholder="Nombre", value=empleado.nombre, required)
+            .form-group
+              label(for="apellido") Apellido
+              input.form-control#apellido(type="text" name="apellido" placeholder="Apellido", value=empleado.apellido, required)
+            .form-group
+              label(for="DNI") DNI
+              input.form-control#dni(type="text" name="dni" placeholder="DNI", value=empleado.dni, required)
+            .form-group
+              label(for="Teléfono") Teléfono
+              input.form-control#telefono(type="text" name="telefono" placeholder="Teléfono", value=empleado.telefono required)
+            .form-group
+              label(for="type") Área
+              select.form-control#areaId(name="AreaId")
+                  each a in areas
+                    option(value=a.id, required, selected=(a.id == empleado.AreaId) ? true :false) #{a.nombre}
+            .form-check
+              - const valid = empleado.verificado ? true : false
+              label.form-label(for="verificado") Habilitado
+              br
+              input.form-check-input#si(type="radio", name="verificado", value=1, checked=valid)
+              label.form-check-label(for="si") SÍ
+              br
+              input.form-check-input#no(type="radio", name="verificado", value=0, checked=!valid)
+              label.form-check-label(for="no") NO
+
+            .form-group.text-center
+              input.btn.btn-primary(type="submit" value="Actualizar")

@@ -11,7 +11,7 @@ router.use((req, res, next) => {
   if (!req.session.user) {
     return res.redirect('/login')
   }
-  if(req.session.user.type == "empleado") {
+  if (req.session.user.type == "empleado") {
     if (req.session.user.admin) {
       return next();
     }
@@ -67,7 +67,7 @@ router.post('/clientes/:uuid', async (req, res) => {
   try {
     //console.log('clienteVerificado/router', client);
     const form = {}
-    form.verificado = (req.body.verificado=="1") ? true : false;
+    form.verificado = (req.body.verificado == "1") ? true : false;
     form.uuid = req.params.uuid;
     //return res.send(form);
 
@@ -116,7 +116,7 @@ router.get('/areas', async (req, res) => {
 router.get('/areas/:id', async (req, res) => {
   try {
     const area = await controllerArea.getById(req.params.id);
-    if(area) {
+    if (area) {
       return res.render('admin/area', {
         title: "Editar área",
         user: req.session.user,
@@ -124,7 +124,7 @@ router.get('/areas/:id', async (req, res) => {
       })
     }
 
-    return res.send("No se encontró el área con id "+req.params.id);
+    return res.send("No se encontró el área con id " + req.params.id);
 
   } catch (error) {
     return res.send(error);
@@ -137,7 +137,7 @@ router.post('/areas/:id', async (req, res) => {
     form.id = req.params.id;
     const result = await controllerArea.updateAreaName(form);
     const area = await controllerArea.getById(req.params.id);
-    if(result == 1) {
+    if (result == 1) {
       return res.render('admin/area', {
         title: "Editar área",
         user: req.session.user,
@@ -150,14 +150,14 @@ router.post('/areas/:id', async (req, res) => {
         user: req.session.user,
         area,
         msg: "No se actualizaron datos."
-      }) 
+      })
     } else if (result == -1) {
-        return res.render('admin/area', {
-          title: "Editar área",
-          user: req.session.user,
-          area,
-          msg: "Ocurrió un error. Intente nuevamente."
-        })
+      return res.render('admin/area', {
+        title: "Editar área",
+        user: req.session.user,
+        area,
+        msg: "Ocurrió un error. Intente nuevamente."
+      })
     }
   } catch (error) {
     return res.send(error);
@@ -212,4 +212,116 @@ router.get('/empleados', async (req, res) => {
   }
 })
 
+router.get('/empleados/:id', async (req, res) => {
+
+  if (req.params.id == req.session.user.id) {
+    return res.redirect('/cuenta')
+  }
+
+  try {
+    const areas = await controllerArea.getAll();
+    const empleado = await controllerEmpleado.getById(req.params.id);
+
+    if (!empleado) {
+      return res.send("No se encontró empleado con ese id");
+    }
+
+    return res.render('admin/empleado', {
+      title: "Detalles de empleado",
+      user: req.session.user,
+      areas,
+      empleado
+    })
+  } catch (error) {
+    return res.send(error);
+  }
+
+})
+
+router.post('/empleados/:id', async (req, res) => {
+
+  try {
+
+    const affectedRows = await controllerEmpleado.updateFromAdmin(req.params.id, req.body);
+    const empleado = await controllerEmpleado.getById(req.params.id);
+    const areas = await controllerArea.getAll();
+
+    if(affectedRows) {
+      return res.render('admin/empleado', {
+        title: "Detalles de empleado",
+        user: req.session.user,
+        areas,
+        empleado,
+        msg: "Actualizado"
+      })
+    } else {
+      return res.render('admin/empleado', {
+        title: "Detalles de empleado",
+        user: req.session.user,
+        areas,
+        empleado,
+        msg: "No se pudo actualizar"
+      })
+    }
+
+  } catch (error) {
+    return res.render('admin/empleado', {
+      title: "Detalles de empleado",
+      user: req.session.user,
+      areas,
+      empleado,
+      msg: "Ocurrió un error"
+    })
+  }
+})
+
+
+router.get('/empleado', async (req, res) => {
+  try {
+    const areas = await controllerArea.getAll();
+    return res.render('admin/empleadoNew', {
+      title: "Alta empleado",
+      user: req.session.user,
+      areas
+    })
+  } catch (error) {
+    return res.json(error);
+  }
+})
+
+router.post('/empleado', async (req, res) => {
+
+  try {
+    const empleado = await controllerEmpleado.create(req.body);
+    const areas = await controllerArea.getAll();
+    if (typeof empleado === 'number' || empleado == -2) {
+      return res.render('admin/empleadoNew', {
+        title: "Alta empleado",
+        user: req.session.user,
+        areas,
+        msg: "Ya existe un empleado con estos datos. Revise DNI o E-mail"
+      })
+    }
+
+    if (empleado) {
+      return res.render('admin/empleadoNew', {
+        title: "Alta empleado",
+        user: req.session.user,
+        areas,
+        msg: "Empleado registrado."
+      })
+    }
+
+    return res.render('admin/empleadoNew', {
+      title: "Alta empleado",
+      user: req.session.user,
+      areas,
+      msg: "Empleado no registrado."
+    })
+
+  } catch (error) {
+    console.log("Error en routerAdmin/empleado POST", error);
+    return res.send(error);
+  }
+})
 module.exports = router;

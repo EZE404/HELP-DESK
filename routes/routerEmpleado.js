@@ -25,6 +25,6 @@ router.get('/', (req, res) => {
   return res.send('200', "Hola desde /empleado");
 })
 
-router.post('/crear', controller.crear);
+router.post('/crear', controller.create);
 
 module.exports = router;

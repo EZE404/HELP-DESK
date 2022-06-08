@@ -9,14 +9,14 @@ const clg = require('../tools/clg');
 async function login(req, res) {
 
     //await clg.info('Ingreso a handler para Empleado POST - /loginEmpleado');
-    
+
     const body = req.body;
     //await clg.objeto(body, 'Body del formulario');
 
     if (!body.email || !body.pass) {
 
         return res.send('Dejá de tocarme el código del lado del cliente, pa');
-    
+
     }
 
     try {
@@ -28,12 +28,12 @@ async function login(req, res) {
         });
 
         //await clg.objeto(user, 'Empleado.findOne');
-        
+
         if (user) {
 
             // compara password del usuario con password hasheado en la BD
             const validPassword = await bcrypt.compare(body.pass, user.pass);
-    
+
             if (validPassword) {
 
                 const userSession = {
@@ -88,13 +88,23 @@ async function login(req, res) {
 //##############################################################
 //################# BUSCAR EMPELADOS ###########################
 
+async function getById(id) {
+    try {
+        const empleado = await Empleado.findByPk(id, { include: [Area] });
+        //console.log("empleado getById: ", empleado);
+        return empleado;
+    } catch (error) {
+        return res.send(error);
+    }
+}
+
 async function getAll(adminEmail) {
     console.log('Entró a funcion todos() de controllerEmpleado');
     try {
         const empleados = await Empleado.findAll({
             where: {
-                email : {
-                    [Op.notLike] : adminEmail
+                email: {
+                    [Op.notLike]: adminEmail
                 }
             }
         });
@@ -107,32 +117,15 @@ async function getAll(adminEmail) {
 //##############################################################
 //################# REGISTRO CLIENTE ###########################
 
-async function crear(req, res) {
+async function create(form) {
     console.log('Entró a función crear() de controllerEmpleado');
-    console.log(req.body);
-    const { nombre, dni, email, telefono, pass, rol } = req.body;
-    
-    let area_id = req.body.areaId;
-
-    console.log(req.body.areaId);
-
-    if (typeof area_id == 'undefined') {
-        area_id = null;
-    }
+    console.log(form)
+    const { nombre, apellido, dni, email, telefono, pass, AreaId, verificado } = form;
 
     try {
 
-        if (req.body.areaId != null) {
-            const area_buscada = await Area.findByPk(req.body.areaId);
-            if(!area_buscada) {
-                return res.status(500).send('No existe el area señalada');
-            }
-        }
-        
-
         const empleado_dni_email = await Empleado.findAll({
             where: {
-                
                 [Op.or]: [
                     {
                         email: email
@@ -144,42 +137,60 @@ async function crear(req, res) {
             }
         });
 
+        console.log("empleado_dni_email", empleado_dni_email);
         if (empleado_dni_email.length) {
-            let aviso = {};
-            if (empleado_dni_email[0].dni == dni) {
-                aviso.dni = `Ya existe un empleado con el dni ${dni}`
-            }
-            if (empleado_dni_email[0].email == email) {
-                aviso.email = `Ya existe un empleado con el correo ${email}`
-            }
-            return res.status(500).json(aviso);
+            return -2
         };
 
-        const salt = await bcrypt.genSalt(10);        
+        const salt = await bcrypt.genSalt(10);
         const pass_enc = await bcrypt.hash(pass, salt);
-        
+
         const empleado_creado = await Empleado.create({
             nombre,
+            apellido,
             dni,
             email,
             telefono,
             pass: pass_enc,
-            rol,
-            AreaId: area_id
+            AreaId,
+            verificado: verificado == "1" ? true : false
         });
 
-        return res.status(200).json(empleado_creado)
+        return empleado_creado;
     } catch (error) {
-        return res.status(500).json(error);
+        console.log("Error en controllerEmpleado.create", error)
+        return error;
     }
 };
 
 //##############################################################
-//################# EDITAR CLIENTE #############################
+//################## EDITAR EMPLEADO ###########################
 
-async function editar(req, res) {
+async function updateFromAdmin(id, form) {
 
-    Empleado.update(req.body, {where:{id:req.body.id}})
+    try {
+        console.log("id: ", id);
+        console.log("form: ", form);
+        const affectedRows = await Empleado.update({
+            nombre: form.nombre,
+            apellido: form.apellido,
+            dni: form.dni,
+            telefono: form.telefono,
+            verificado: form.verificado == "1" ? true : false,
+            AreaId: form.AreaId
+        }, {
+            where: {
+                id: id
+            }
+        });
+        console.log("affectedRows: ", affectedRows);
+        return affectedRows[0];
+    } catch (error) {
+        console.log("error en controller.updateFromAdmin")
+        throw error;
+    }
+
+    //Empleado.update(req.body, {where:{id:req.body.id}})
 }
 
 
@@ -192,5 +203,7 @@ async function editar(req, res) {
 module.exports = {
     login,
     getAll,
-    crear
+    getById,
+    updateFromAdmin,
+    create
 }

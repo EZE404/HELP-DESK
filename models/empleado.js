@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: "El nombre no puede estar vacío"
         },
         is: {
-          args: /^[a-zA-Z]+([\s][a-zA-Z]+)*$/g,
+          args: /^[a-zA-ZÀ-ÿ]+([\s][a-zA-ZÀ-ÿ]+)*$/g,
           msg: "El nombre solo puede contener letras sin espacios dobles, ni espacios al principio y fin"
         }
       }
@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: "El apellido no puede estar vacío"
         },
         is: {
-          args: /^[a-zA-Z]+([\s][a-zA-Z]+)*$/g,
+          args: /^[a-zA-ZÀ-ÿ]+([\s][a-zA-ZÀ-ÿ]+)*$/g,
           msg: "El apellido solo puede contener letras sin espacios dobles, ni espacios al principio y fin"
         }
       }
