@@ -2,8 +2,14 @@ extends ../layout
 
 block content
   .container.p-5
+    .row
+      .col.text-center
+        h2.display4 Empleados
+        hr
     .row.mb-4
+      .col
         a.btn.btn-sm.btn-primary(href="/admin/empleado" role="button") AGREGAR
+        hr
     .row
       .col.mx-auto
         table#table_id
