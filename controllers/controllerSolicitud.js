@@ -14,6 +14,31 @@ async function form(req, res) {
 //#######################################################
 //############# GET SOLICITUD BY UUID ###################
 
+async function getById(id) {
+    await clg.info('Ingreso a handler para getById');
+
+    try {
+        const solicitud = await Solicitud.findOne({
+            where: {
+                id
+            },
+            include: {
+                model: Historial,
+                include: Area
+            },
+            order: [[{ model: Historial }, 'fecha', 'DESC']]
+        });
+
+        if (!solicitud) {
+            return clg.info('Fallo al traer solicitud con historiales en getSolicitudByUuid');
+        };
+
+        return solicitud
+    } catch (err) {
+        return err;
+    };
+};
+
 async function getSolicitudByUuid(uuid) {
     await clg.info('Ingreso a handler para getSolicitudByUuid');
 
@@ -249,5 +274,6 @@ module.exports = {
     todo,
     crear,
     getAllByClienteId,
-    getSolicitudByUuid
+    getSolicitudByUuid,
+    getById
 }

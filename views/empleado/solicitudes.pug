@@ -1,0 +1,35 @@
+extends ../layout
+block content
+  .container.p-5
+    .row
+      .col.text-center
+        h2.display4 #{area.nombre}
+        hr
+    .row
+      .col.mx-auto
+        table#table_id
+          thead
+            tr
+              th(width="30px") Solicitud 
+              th Detalle
+              th(width="50px") Prioridad
+              th(width="90px") Fecha
+              th(width="50px") Estado
+              th(width="100px") Empleado
+          tbody
+            each h in historials
+              tr
+                td
+                  a(href="/empleado/solicitud/"+h.SolicitudId) #{h.SolicitudId}
+                td #{h.detalle}
+                td #{h.prioridad}
+                td #{moment(h.fecha).format('DD/MM/YYYY HH:mm')}
+                td #{h.estado}
+                td 
+                  if (h.Empleado)
+                    #{h.Empleado.nombre+" "+h.Empleado.apellido}
+                  else
+                    |NO ATENDIDO
+
+block datatable
+  script(src="/javascripts/datatable.js")

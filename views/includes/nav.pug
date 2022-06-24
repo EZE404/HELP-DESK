@@ -5,7 +5,7 @@ if(user)
         a.nav-link.btn.btn-sm.btn-info(href='/cliente') Mis solicitudes
       li.nav-item
         a.nav-link.btn.btn-sm.btn-info(href='/cliente/solicitud') Nueva solicitud
-  else if (user.admin)
+  else if (user.AreaId == 3)
     ul.nav.justify-content-center.p-2.bg-dark
       li.nav-item
         a.nav-link.btn.btn-sm.btn-info(href='/admin/areas') Areas
@@ -13,3 +13,11 @@ if(user)
         a.nav-link.btn.btn-sm.btn-info(href='/admin/empleados') Empleados
       li.nav-item
         a.nav-link.btn.btn-sm.btn-info(href='/admin/clientes') Clientes
+  else if (user.AreaId == 2)
+    ul.nav.justify-content-center.p-2.bg-dark
+      li.nav-item
+        a.nav-link.btn.btn-sm.btn-info(href='/calidad/notificaciones') Notificaciones
+  else
+    ul.nav.justify-content-center.p-2.bg-dark
+      li.nav-item
+        a.nav-link.btn.btn-sm.btn-info(href='/empleado') Solicitudes

@@ -47,6 +47,7 @@ app.use('/login', require('./routes/routerLogin'));
 app.use("/cuenta", require('./routes/routerCuenta'));
 // NUEVO FORMATO DE ADMIN, CLIENTE O EMPLEADO
 app.use("/admin", require("./routes/routerAdmin"));
+app.use('/calidad', require("./routes/routerCalidad"));
 app.use("/cliente", require("./routes/routerCliente"));
 app.use("/empleado", require("./routes/routerEmpleado"));
 

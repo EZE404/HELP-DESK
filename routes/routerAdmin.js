@@ -12,7 +12,7 @@ router.use((req, res, next) => {
     return res.redirect('/login')
   }
   if (req.session.user.type == "empleado") {
-    if (req.session.user.admin) {
+    if (req.session.user.AreaId == 3) {
       return next();
     }
   }

@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: "El nombre no puede estar vacío"
         },
         is: {
-          args: /^[a-zA-Z0-9]+([\s][a-zA-Z0-9]+)*$/g,
+          args: /^[a-zA-ZÀ-ÿ0-9]+([\s][a-zA-ZÀ-ÿ0-9]+)*$/g,
           msg: "El nombre solo puede contener letras y números. Sin espacios dobles ni espacios al principio o final"
         }
       }

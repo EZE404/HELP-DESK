@@ -22,12 +22,18 @@ router.get('/', async function (req, res) {
 
     console.log(req.session.user);
     if(req.session.user.type == "empleado") {
-      const admin = req.session.user.admin;
-      if (admin) {
+
+      const areaId = req.session.user.AreaId;
+      
+      if (areaId == 3) {
         return res.redirect('/admin');
-      } else {
-        return res.redirect('/empleado');
       }
+      
+      if (areaId == 2) {
+        return res.redirect('/calidad')
+      }
+      
+      return res.redirect('/empleado');
     }
 
     if(req.session.user.type == "cliente") {

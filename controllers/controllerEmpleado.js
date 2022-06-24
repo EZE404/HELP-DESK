@@ -193,6 +193,74 @@ async function updateFromAdmin(id, form) {
     //Empleado.update(req.body, {where:{id:req.body.id}})
 }
 
+async function updateEmpl(form) {
+
+    let result = -1;
+    try {
+        const updatedRows = await Empleado.update({
+            nombre: form.nombre,
+            telefono: form.telefono,
+            email: form.email
+        },
+            {
+                where: {
+                    dni: form.dni
+                }
+            });
+
+        console.log("empleado actualizado!");
+
+        result = updatedRows[0];
+        return result;
+
+    } catch (error) {
+        throw error;
+    }
+
+}
+
+//##############################################################
+//################## ACTUALIZAR PASS ###########################
+
+async function updatePass(form) {
+    let result = -1;
+
+    try {
+        const findUser = await Empleado.findOne({
+            where: {
+                dni: form.dni
+            }
+        });
+
+        if (findUser) {
+            // compara password del usuario con password hasheado en la BD
+            const validPassword = await bcrypt.compare(form.pass, findUser.pass);
+            if (!validPassword) {
+                return -2;
+            }
+        }
+
+        // generar salt para hashear el password
+        const salt = await bcrypt.genSalt(10);
+
+        // hasheamos el password con salt anexado
+        const pass_enc = await bcrypt.hash(form.newpass, salt);
+
+        const updatedRows = await Empleado.update({
+            pass: pass_enc
+        },
+            {
+                where: {
+                    dni: form.dni
+                }
+            });
+
+        result = updatedRows[0];
+        return result;
+    } catch (error) {
+        throw error;
+    }
+}
 
 //##############################################################
 //################# BAJA CLIENTE ###############################
@@ -205,5 +273,7 @@ module.exports = {
     getAll,
     getById,
     updateFromAdmin,
+    updateEmpl,
+    updatePass,
     create
 }
