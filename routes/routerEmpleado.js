@@ -35,27 +35,31 @@ router.get('/', async (req, res) => {
 
   try {
     const area = await controllerArea.getById(req.session.user.AreaId);
-    const historials = await controllerHistorial.getAllBySessionAreaId(req.session.user.AreaId);
-/*     if (historials instanceof Error) {
-      return res.send("Ocurrió un error");
-    } */
+    //const historials = await controllerHistorial.getAllBySessionAreaId(req.session.user.AreaId);
 
-    console.log("intentando fetchear historiales en routerEmpleado");
+    await console.log("intentando fetchear historiales en routerEmpleado");
+
+    const solicitudes = await controllerSolicitud.getAllNoResolvedByAreaId(req.session.user.AreaId);
+
+    if (solicitudes instanceof Error) {
+      return res.json(solicitudes);
+    }
+
     res.render('empleado/solicitudes', {
       title: "Solicitudes",
       user: req.session.user,
-      historials,
+      solicitudes,
       area
     })
   } catch (error) {
-    return res.json(error);
+    return res.send(error);
   }
 })
 
 router.get('/solicitud/:id', async (req, res) => {
   //if(req.params.id) {return res.send(req.params.id)}
   try {
-    const solicitud = await controllerSolicitud.getById(req.params.id);
+    const solicitud = await controllerSolicitud.getSolicitudByUuid(req.params.id);
     console.log(solicitud)
     return res.render('empleado/solicitud', {
     title: "Detalles de solicitud",

@@ -12,7 +12,6 @@ block content
               th Descripcion
               th(width="100px") Prioridad 
               th(width="100px") Estado
-              th Detalle
           tbody
             each solicitud in solicitudes
               tr
@@ -20,14 +19,7 @@ block content
                   a(href="/cliente/tracking/"+solicitud.uuid) #{moment(solicitud.fechaAlta).format('DD/MM/YYYY HH:mm')}
                 td #{solicitud.tipo}
                 td #{solicitud.descripcion.slice(0, 90) + "..."}
-                if (solicitud.Historials.length)
-                  td=solicitud.Historials[0].prioridad
-                  td=solicitud.Historials[0].estado
-                  td=solicitud.Historials[0].detalle
-                else
-                  td
-                  td
-                  td Aún no atendida
-
+                td #{solicitud.prioridad}
+                td #{solicitud.estado}
 block datatable
   script(src="/javascripts/datatable.js")

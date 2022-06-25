@@ -19,7 +19,8 @@ DO BEGIN
       SELECT SolicitudId, max(fecha) AS fecha
       FROM help_desk.historials
       GROUP BY SolicitudId
-      ) a NATURAL JOIN historials
+      ) a NATURAL JOIN historials hls
+      INNER JOIN solicituds sds ON hls.SolicitudId = sds.id
   WHERE estado != 'Resuelto'
   AND prioridad = 'ALTA'
   AND TIMESTAMPDIFF(MINUTE, fecha, current_timestamp) > 36*60;

@@ -1,6 +1,6 @@
 'use strict';
 
-const id_area = `(SELECT id FROM areas WHERE nombre LIKE '%HELPDESK%' LIMIT 1)`;
+//const id_area = `(SELECT id FROM areas WHERE nombre LIKE '%HELPDESK%' LIMIT 1)`;
 const id_solicitud_1 = `(SELECT id FROM solicituds WHERE uuid LIKE '%DEMO1%' LIMIT 1)`;
 const id_solicitud_2 = `(SELECT id FROM solicituds WHERE uuid LIKE '%DEMO2%' LIMIT 1)`;
 const id_solicitud_3 = `(SELECT id FROM solicituds WHERE uuid LIKE '%DEMO3%' LIMIT 1)`;
@@ -10,14 +10,17 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('historials', [{
       SolicitudId: Sequelize.literal(id_solicitud_1),
-      AreaId: Sequelize.literal(id_area)
-     }, {
+      detalle: "Semilla para DEMO1"
+      //AreaId: Sequelize.literal(id_area)
+    }, {
       SolicitudId: Sequelize.literal(id_solicitud_2),
-      AreaId: Sequelize.literal(id_area)
-     }, {
+      detalle: "Semilla para DEMO2"
+      //AreaId: Sequelize.literal(id_area)
+    }, {
       SolicitudId: Sequelize.literal(id_solicitud_3),
-      AreaId: Sequelize.literal(id_area)
-     }], {});
+      detalle: "Semilla para DEMO3"
+      //AreaId: Sequelize.literal(id_area)
+    }], {});
   
   },
 

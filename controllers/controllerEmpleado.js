@@ -48,7 +48,7 @@ async function login(req, res) {
                     verificado: user.verificado,
                     AreaId: user.AreaId,
                     verificado: user.verificado,
-                    admin: user.admin,
+                    admin: user.AreaId == 3,
                     type: "empleado"
                 }
                 //configurar la session para no autenticar en cada requerimiento

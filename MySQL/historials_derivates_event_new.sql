@@ -1,7 +1,3 @@
-'use strict';
-
-const event_name = "historials_derivates"
-const derivates_event = `
 CREATE EVENT historials_derivates
 ON SCHEDULE EVERY 1 MINUTE
 STARTS '2021-08-02 00:04:39.000'
@@ -49,14 +45,3 @@ DO BEGIN
   END LOOP;
   CLOSE resultado;
 END
-`
-
-module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.sequelize.query(derivates_event);
-  },
-
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.sequelize.query(`DROP EVENT IF EXISTS ${event_name}`);
-  }
-};

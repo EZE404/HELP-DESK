@@ -57,7 +57,7 @@ router.post('/solicitud', async (req, res) => {
   form.userId = req.session.user.id;
 
   const result = await controllerSolicitud.crear(form);
-  if(result) {
+  if(result == 1) {
     return res.redirect('/cliente');
   } else if(result == 0){
     return res.send('500', "Algo no anduvo bien al cargartu solicitud");

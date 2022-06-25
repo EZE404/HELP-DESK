@@ -71,12 +71,63 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       }
+    },
+    prioridad: {
+      type: DataTypes.STRING,
+      defaultValue: 'NORMAL',
+      allowNull: false,
+      field: 'prioridad',
+      validate: {
+        isIn: {
+          args: [['ALTA', 'NORMAL', 'BAJA']],
+          msg: "La prioridad debe ser 'ALTA', 'NORMAL', o 'BAJA' y en mayúsculas"
+        },
+        isUppercase: {
+          args: true,
+          msg: "La prioridad debe ser un valor en uppercase"
+        }
+      }
+    },
+    estado: {
+      type: DataTypes.STRING,
+      defaultValue: 'Pendiente',
+      allowNull: false,
+      field: 'estado',
+      validate: {
+        isIn: {
+          args: ['Pendiente', 'En proceso', 'Solucionado'],
+          msg: "El estado debe ser 'Pendiente', 'En proceso', o 'Solucionado'"
+        }
+      }
+    },
+    AreaId: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1,
+      allowNull: false,
+      field: 'AreaId',
+      validate: {
+        notNull: {
+          args: true,
+          msg: "El id de área no puede ser nulo"
+        },
+        isInt: {
+          args: true,
+          msg: "El ID de área debe ser un entero"
+        },
+        enteroPositivo(valor) {
+          if (valor < 1) {
+            throw new Error('El ID de área debe ser un entero positivo')
+          }
+        }
+      }
     }
   }, {});
 
   Solicitud.associate = (models) => {
 
     Solicitud.belongsTo(models.Cliente);
+
+    Solicitud.belongsTo(models.Area);
     
     Solicitud.hasMany(models.Historial);
     

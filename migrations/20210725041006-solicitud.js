@@ -39,6 +39,28 @@ module.exports = {
           },
           key: 'id'
         }
+      },
+      prioridad: {
+        type: Sequelize.STRING,
+        defaultValue: "NORMAL",
+        allowNull: false
+      },
+      estado: {
+        type: Sequelize.STRING,
+        defaultValue: 'Pendiente',
+        allowNull: false
+      },
+      AreaId: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1,
+        allowNull: false,
+        onDelete: 'RESTRICT',
+        references: {
+          model: {
+            tableName: 'areas'
+          },
+          key: 'id'
+        }
       }
     }, {
       charset: 'utf8',

@@ -1,51 +1,61 @@
 extends ../layout
 block content
-  .row.px-5.mt-3
-    .col.mx-auto
-      .card
-        .card-body.p-4
-          p.text-center
-            |Solicitud #{solicitud.uuid}
-  .row.align-items-start.px-5.mt-3
-    .col.mx-auto
-      .card
-        .card-body.p-4
-          p.h4.text-center Transferir
-            form(action="/empleado/transferir/"+solicitud.uuid method="post")
-              .form-group
-                label.form-label(for='prioridad') Prioridad
-                select.form-control(name='prioridad', id='prioridad' required)
-                    //option(default selected disabled required) - seleccione un tipo -
-                    each val in ['ALTA' , 'NORMAL' , 'BAJA']
-                      option(value=val selected = val == solicitud.Historials[0].prioridad) #{val}
-              .form-group
-                label(for="detalle") Detalle
-                input.form-control#detalle(type="password" name="detalle" placeholder="Contraseña", required)
-              .form-group
-                label(for="type") Tipo de Usuario
-                select.form-control#type(name="type")
-                  option(value="cliente") Cliente
-                  option(value="empleado") Empleado
-              .form-group.text-center
-                input.btn.btn-primary(type="submit" value="Transferir")
-    .col.mx-auto
-      .card
-        .card-body.p-4
-          p.h4.text-center Solucionar
-            form(action="/empleado/solucionar/"+solicitud.uuid method="post")
-              .form-group
-                label.form-label(for='prioridad') Prioridad
-                select.form-control(name='prioridad', id='prioridad' required)
-                    //option(default selected disabled required) - seleccione un tipo -
-                    each val in ['ALTA' , 'NORMAL' , 'BAJA']
-                      option(value=val selected = val == solicitud.Historials[0].prioridad) #{val}
-              .form-group
-                label.form-label(for="detalle") Detalle
-                textarea.form-control#detalle(name="detalle" placeholder="Detalle" rows="10" minlength="100" maxlength="1000" required)
-              .form-group
-                label(for="type") Tipo de Usuario
-                select.form-control#type(name="type")
-                  option(value="cliente") Cliente
-                  option(value="empleado") Empleado
-              .form-group.text-center
-                input.btn.btn-primary(type="submit" value="Solucionar")
+  .container.p-5
+    .row
+      .col.text-center
+        h2.display4 Historial de movimientos
+        hr
+    .row
+      .col.mx-auto
+        <div class="alert alert-info" role="alert">
+          <p>#{solicitud.descripcion}</p>
+          <hr>
+          <p class="mb-0">Ticket: #{solicitud.uuid}</p>
+          <p class="mb-0">Tipo: #{solicitud.tipo}</p>
+          <p class="mb-0">Estado: #{solicitud.estado}</p>
+          <p class="mb-0">Prioridad: #{solicitud.prioridad}</p>
+        </div>
+        hr
+    .row.align-items-start
+      .col.mx-auto
+        .card
+          .card-body.p-4
+            p.h4.text-center Transferir
+              form(action="/empleado/transferir/"+solicitud.uuid method="post")
+                .form-group
+                  label.form-label(for='prioridad') Prioridad
+                  select.form-control(name='prioridad', id='prioridad' required)
+                      //option(default selected disabled required) - seleccione un tipo -
+                      each val in ['ALTA' , 'NORMAL' , 'BAJA']
+                        option(value=val selected = val == solicitud.prioridad) #{val}
+                .form-group
+                  label(for="detalle") Detalle
+                  input.form-control#detalle(type="password" name="detalle" placeholder="Contraseña", required)
+                .form-group
+                  label(for="type") Tipo de Usuario
+                  select.form-control#type(name="type")
+                    option(value="cliente") Cliente
+                    option(value="empleado") Empleado
+                .form-group.text-center
+                  input.btn.btn-primary(type="submit" value="Transferir")
+      .col.mx-auto
+        .card
+          .card-body.p-4
+            p.h4.text-center Solucionar
+              form(action="/empleado/solucionar/"+solicitud.uuid method="post")
+                .form-group
+                  label.form-label(for='prioridad') Prioridad
+                  select.form-control(name='prioridad', id='prioridad' required)
+                      //option(default selected disabled required) - seleccione un tipo -
+                      each val in ['ALTA' , 'NORMAL' , 'BAJA']
+                        option(value=val selected = val == solicitud.prioridad) #{val}
+                .form-group
+                  label.form-label(for="detalle") Detalle
+                  textarea.form-control#detalle(name="detalle" placeholder="Detalle" rows="10" minlength="100" maxlength="1000" required)
+                .form-group
+                  label(for="type") Tipo de Usuario
+                  select.form-control#type(name="type")
+                    option(value="cliente") Cliente
+                    option(value="empleado") Empleado
+                .form-group.text-center
+                  input.btn.btn-primary(type="submit" value="Solucionar")

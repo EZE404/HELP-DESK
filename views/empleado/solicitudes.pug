@@ -17,17 +17,17 @@ block content
               th(width="50px") Estado
               th(width="100px") Empleado
           tbody
-            each h in historials
+            each s in solicitudes
               tr
                 td
-                  a(href="/empleado/solicitud/"+h.SolicitudId) #{h.SolicitudId}
-                td #{h.detalle}
-                td #{h.prioridad}
-                td #{moment(h.fecha).format('DD/MM/YYYY HH:mm')}
-                td #{h.estado}
+                  a(href="/empleado/solicitud/"+s.uuid) VER
+                td #{s.Historials[0].detalle}
+                td #{s.prioridad}
+                td #{moment(s.Historials[0].fecha).format('DD/MM/YYYY HH:mm')}
+                td #{s.estado}
                 td 
-                  if (h.Empleado)
-                    #{h.Empleado.nombre+" "+h.Empleado.apellido}
+                  if (s.Historials[0].EmpleadoId)
+                    #{s.Historials[0].EMpleadoId}
                   else
                     |NO ATENDIDO
 

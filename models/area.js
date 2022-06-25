@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Area.hasMany(models.Empleado);
     
-    Area.hasMany(models.Historial);
+    Area.hasMany(models.Solicitud);
     
   };
   

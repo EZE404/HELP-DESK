@@ -10,16 +10,6 @@ module.exports = {
         allowNull: false,
         autoIncrement: true
       },
-      prioridad: {
-        type: Sequelize.STRING,
-        defaultValue: 'NORMAL',
-        allowNull: false
-      },
-      estado: {
-        type: Sequelize.STRING,
-        defaultValue: 'Pendiente',
-        allowNull: false
-      },
       detalle: {
         type: Sequelize.STRING,
         defaultValue: 'Solicitud ingresante',
@@ -30,6 +20,11 @@ module.exports = {
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
+      derivacion: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
       EmpleadoId: {
         type: Sequelize.INTEGER,
         allowNull: true,
@@ -37,17 +32,6 @@ module.exports = {
         references: {
           model: {
             tableName: 'empleados'
-          },
-          key: 'id'
-        }
-      },
-      AreaId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        onDelete: 'RESTRICT',
-        references: {
-          model: {
-            tableName: 'areas'
           },
           key: 'id'
         }

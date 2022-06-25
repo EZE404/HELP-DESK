@@ -47,10 +47,11 @@ async function getSolicitudByUuid(uuid) {
             where: {
                 uuid: uuid
             },
-            include: {
-                model: Historial,
-                include: Area
-            },
+            include: [{
+                model: Historial
+            }, {
+                model: Area
+            }],
             order: [[{model: Historial}, 'fecha', 'DESC']]
         });
 
@@ -66,6 +67,28 @@ async function getSolicitudByUuid(uuid) {
 
 //#######################################################
 //################## GET SOLICITUDES ####################
+
+async function getAllNoResolvedByAreaId(id) {
+    try {
+        const solicitudes = await Solicitud.findAll({
+            where : {
+                AreaId: id,
+                estado: {
+                    [Op.not] : "Solucionado"
+                }
+            },
+            include: Historial,
+            order: [[{ model: Historial }, 'fecha', 'DESC']]
+        })
+
+        //const solicitudes = await Solicitud
+        await console.log("###### solicitudes en empleado/index ##########")
+        await console.log(solicitudes);
+        return solicitudes;
+    } catch (error) {
+        return error
+    }
+}
 
 async function todo(req, res) {
 
@@ -203,7 +226,7 @@ async function crear(form) {
 
     try {
 
-        const area = await Area.findOne({
+/*         const area = await Area.findOne({
             where: {
                 nombre: {
                     [Op.like]: '%HELPDESK%'
@@ -213,26 +236,23 @@ async function crear(form) {
 
         if (!area) {
             return res.send('no existe el area help desk');
-        };
+        }; */
 
         const solicitud = await Solicitud.create({
             ClienteId : userId,
             tipo,
             descripcion,
-            Historials: [
-                {
-                    AreaId: area.id,
-                }
-            ]
-            
+            //prioridad: "NORMAL",
+            Historials: [{}]
         },{
             include: Historial
         });
 
 
+        console.log("####### creando solicitud ############");
+        console.log(solicitud);
         if(!solicitud) {
-            return res;
-            //return res.send('no funcó');
+            return console.log("no funcó la creación de una solicitud");
         };
 
         res = 1;
@@ -273,6 +293,7 @@ module.exports = {
     form,
     todo,
     crear,
+    getAllNoResolvedByAreaId,
     getAllByClienteId,
     getSolicitudByUuid,
     getById
