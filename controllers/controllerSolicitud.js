@@ -77,7 +77,7 @@ async function getAllNoResolvedByAreaId(id) {
                     [Op.not] : "Solucionado"
                 }
             },
-            include: Historial,
+            include: { all: true, nested: true },
             order: [[{ model: Historial }, 'fecha', 'DESC']]
         })
 
@@ -124,17 +124,6 @@ async function todo(req, res) {
 
         }
 
-
-        /*         if (clientes_dni.length) {
-                    let solicitudes_length = _size(clientes_dni[0].solicitudes);
-                    if (solicitudes_length) {
-                        return res.status(200).json(clientes_dni[0].solicitudes);
-                    } else {
-                        return res.status(200).send(`No hay solicitudes para el cliente con dni ${dni}`);
-                    }
-                    
-                } */
-
         return res.status(200).send(`No hay cliente con dni ${dni}`);
 
     } catch (error) {
@@ -144,75 +133,6 @@ async function todo(req, res) {
 
 //#######################################################
 //################## CREAR SOLICITUD ####################
-
-/* async function crear2(req, res) {
-    console.log('Entró a la función crear() de controllerSolicitud');
-    console.log(req.body);
-
-    if (!req.session.user) {
-        return res.redirect('/');
-    };
-
-    if (!req.body.tipo || !req.body.descripcion) {
-        return res.send('No me toques el código, bigote');
-    };
-
-
-    const { tipo, descripcion } = req.body;
-
-    try {
-        const cliente_buscado = await Cliente.findByPk(req.session.user.id);
-        console.log('cliente buscado en crear solicitud', cliente_buscado);
-
-        if (cliente_buscado) {
-            const solicitud_creada = await Solicitud.build({
-                ClienteId: req.session.user.id,
-                tipo,
-                descripcion
-            });
-
-            if (solicitud_creada) {
-                const area = await Area.findOne({
-                    where: {
-                        nombre: {
-                            [Op.like]: '%HELP DESK%'
-                        }
-                    }
-                });
-
-                if (!area) {
-                    return res.send('no existe el area intentando guardar historial en alta de reclamo')
-                };
-
-                const historial_creado = await Historial.build({
-                    SolicitudId: solicitud_creada.id,
-                    fecha: solicitud_creada.fechaAlta,
-                    AreaId: area.id
-                });
-
-                if (historial_creado) {
-                    await historial_creado.setSolicitud(solicitud_creada);
-                    await solicitud_creada.setHistorial(historial_creado);
-                    await solicitud_creada.save();
-                    await historial_creado.save();
-                    return res.send('HOLAAAAAAAAAAAAAAAAA')
-                }
-            }
-
-            return res.status(200).json(solicitud_creada);
-        } else {
-            return res.send('no existe ese cliente');
-        }
-
-
-
-    } catch (error) {
-        res.status(500).json(error);
-    }
-} */
-
-
-//############## CREAR EXPERIMENTAL #######################
 
 async function crear(form) {
 
@@ -225,18 +145,6 @@ async function crear(form) {
     };
 
     try {
-
-/*         const area = await Area.findOne({
-            where: {
-                nombre: {
-                    [Op.like]: '%HELPDESK%'
-                }
-            }
-        });
-
-        if (!area) {
-            return res.send('no existe el area help desk');
-        }; */
 
         const solicitud = await Solicitud.create({
             ClienteId : userId,

@@ -15,7 +15,7 @@ block content
               th(width="50px") Prioridad
               th(width="90px") Fecha
               th(width="50px") Estado
-              th(width="100px") Empleado
+              th(width="150px") Empleado
           tbody
             each s in solicitudes
               tr
@@ -27,7 +27,7 @@ block content
                 td #{s.estado}
                 td 
                   if (s.Historials[0].EmpleadoId)
-                    #{s.Historials[0].EMpleadoId}
+                    | #{s.Historials[0].Empleado.nombre+" "+s.Historials[0].Empleado.apellido}
                   else
                     |NO ATENDIDO
 

@@ -20,7 +20,8 @@ FROM (
     FROM historials
     GROUP BY SolicitudId
   ) b
-  INNER JOIN historials h ON b.SolicitudId = h.SolicitudId
+--  INNER JOIN historials h ON b.SolicitudId = h.SolicitudId
+  INNER JOIN solicituds std ON b.SolicitudId = std.id
   AND b.fecha_max = h.fecha
 WHERE TIMESTAMPDIFF(MINUTE, fecha_min, current_time()) > 15 * 24 * 60
   AND estado != 'Resuelto';
