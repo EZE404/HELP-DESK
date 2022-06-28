@@ -28,6 +28,11 @@ module.exports = {
       mensaje: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      vista: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
       }
     }, {
       charset: "utf8",

@@ -2,12 +2,17 @@ extends ../layout
 block content
   .container.p-5
     .row
-      .col.text-center
-        h2.display4 Historial de movimientos
+      .col
+        h2.display4 Atención de Solicitud
+          if (solicitud.estado == "Pendiente")
+            a.btn.btn-sm.btn-outline-primary.float-right(href="/empleado/solicitud/"+solicitud.uuid+"/take") Tomar solicitud
+          if (solicitud.estado == "En proceso")
+            a.btn.btn-sm.btn-outline-primary.float-right(href="/empleado/solicitud/"+solicitud.uuid+"/untake") Liberar solicitud
         hr
     .row
       .col.mx-auto
         <div class="alert alert-info" role="alert">
+          <p>Descripción</p>
           <p>#{solicitud.descripcion}</p>
           <hr>
           <p class="mb-0">Ticket: #{solicitud.uuid}</p>
@@ -27,15 +32,15 @@ block content
                   select.form-control(name='prioridad', id='prioridad' required)
                       //option(default selected disabled required) - seleccione un tipo -
                       each val in ['ALTA' , 'NORMAL' , 'BAJA']
-                        option(value=val selected = val == solicitud.prioridad) #{val}
+                        option(value=val selected=val == solicitud.prioridad) #{val}
                 .form-group
-                  label(for="detalle") Detalle
-                  input.form-control#detalle(type="password" name="detalle" placeholder="Contraseña", required)
+                  label.form-label(for="detalle") Detalle
+                  textarea.form-control#detalle(name="detalle" placeholder="Detalle" rows="6" minlength="100" maxlength="1000" required)
                 .form-group
-                  label(for="type") Tipo de Usuario
-                  select.form-control#type(name="type")
-                    option(value="cliente") Cliente
-                    option(value="empleado") Empleado
+                  label(for="AreaId") Área
+                  select.form-control#AreaId(name="AreaId")
+                      each a in areas
+                        option(value=a.id, required, selected=a.id == solicitud.AreaId) #{a.nombre}
                 .form-group.text-center
                   input.btn.btn-primary(type="submit" value="Transferir")
       .col.mx-auto
@@ -48,14 +53,9 @@ block content
                   select.form-control(name='prioridad', id='prioridad' required)
                       //option(default selected disabled required) - seleccione un tipo -
                       each val in ['ALTA' , 'NORMAL' , 'BAJA']
-                        option(value=val selected = val == solicitud.prioridad) #{val}
+                        option(value=val selected=val == solicitud.prioridad) #{val}
                 .form-group
                   label.form-label(for="detalle") Detalle
                   textarea.form-control#detalle(name="detalle" placeholder="Detalle" rows="10" minlength="100" maxlength="1000" required)
-                .form-group
-                  label(for="type") Tipo de Usuario
-                  select.form-control#type(name="type")
-                    option(value="cliente") Cliente
-                    option(value="empleado") Empleado
                 .form-group.text-center
                   input.btn.btn-primary(type="submit" value="Solucionar")

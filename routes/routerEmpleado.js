@@ -59,17 +59,43 @@ router.get('/', async (req, res) => {
 router.get('/solicitud/:id', async (req, res) => {
   //if(req.params.id) {return res.send(req.params.id)}
   try {
+    const areas = await controllerArea.getAll();
     const solicitud = await controllerSolicitud.getSolicitudByUuid(req.params.id);
     console.log(solicitud)
     return res.render('empleado/solicitud', {
     title: "Detalles de solicitud",
     user: req.session.user,
-    solicitud
+    solicitud,
+    areas
   })
   } catch (error) {
     return res.json(error);
   }
 
+})
+
+router.get('/solicitud/:uuid/take', async (req, res) => {
+  try {
+    const soli = await controllerSolicitud.getSolicitudByUuid(req.params.uuid);
+    const newHistorial = await controllerSolicitud.inProcess(soli.id, req.session.user.id);
+
+    //return res.json(newHistorial)
+    return res.redirect('/empleado/solicitud/'+req.params.uuid);
+  } catch (error) {
+    return res.json(error)
+  }
+})
+
+router.get('/solicitud/:uuid/untake', async (req, res) => {
+  try {
+    const soli = await controllerSolicitud.getSolicitudByUuid(req.params.uuid);
+    const newHistorial = await controllerSolicitud.pending(soli.id, req.session.user.id);
+
+    //return res.json(newHistorial)
+    return res.redirect('/empleado/solicitud/' + req.params.uuid);
+  } catch (error) {
+    return res.json(error)
+  }
 })
 
 module.exports = router;

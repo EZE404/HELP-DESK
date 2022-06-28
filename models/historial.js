@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: {
           args: [20, 1000],
-          msg: "El detalle debe contener entre 100 y 1000 caracteres"
+          msg: "El detalle debe contener entre 20 y 1000 caracteres"
         }
       }
     },

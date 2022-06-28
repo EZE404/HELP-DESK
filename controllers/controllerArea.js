@@ -5,13 +5,13 @@ const { Op } = require('sequelize');
 //##############################################################
 //################### BUSCAR AREAS #############################
 
-async function getAll(req, res) {
+async function getAll() {
     console.log('Entró a funcion todos() de controllerArea');
     try {
         const areas = await Area.findAll();
         return areas;
     } catch (error) {
-        return res.send(error)
+        return error;
     };
 };
 

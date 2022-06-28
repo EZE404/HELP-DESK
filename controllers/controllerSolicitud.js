@@ -195,7 +195,54 @@ async function getAllByClienteId(id) {
     }
 }
 
+async function pending(sId) {
+    try {
+        let newHistorial;
+        const affectedRows = await Solicitud.update({
+            estado: "Pendiente"
+        }, {
+            where: {
+                id: sId
+            }
+        })
 
+        if (affectedRows[0]) {
+            newHistorial = await Historial.create({
+                detalle: "Liberada para ser atendida",
+                SolicitudId: sId
+            })
+        }
+
+        return newHistorial;
+    } catch (error) {
+        return error;
+    }
+}
+
+async function inProcess(sId, uId) {
+    try {
+        let newHistorial;
+        const affectedRows = await Solicitud.update({
+            estado: "En proceso"
+        }, {
+            where: {
+                id: sId
+            }
+        })
+
+        if (affectedRows[0]) {
+            newHistorial = await Historial.create({
+                detalle: "Siendo atendida por un empleado",
+                EmpleadoId: uId,
+                SolicitudId: sId
+            })
+        }
+
+        return newHistorial;
+    } catch (error) {
+        return error;
+    }
+}
 //#######################################################
 module.exports = {
     form,
@@ -204,5 +251,7 @@ module.exports = {
     getAllNoResolvedByAreaId,
     getAllByClienteId,
     getSolicitudByUuid,
-    getById
+    getById,
+    inProcess,
+    pending
 }

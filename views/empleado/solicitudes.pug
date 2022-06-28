@@ -10,26 +10,32 @@ block content
         table#table_id
           thead
             tr
-              th(width="30px") Solicitud 
+              th(width="90px") Fecha
               th Detalle
               th(width="50px") Prioridad
-              th(width="90px") Fecha
               th(width="50px") Estado
               th(width="150px") Empleado
+              th(width="30px") VER
           tbody
             each s in solicitudes
               tr
-                td
-                  a(href="/empleado/solicitud/"+s.uuid) VER
+                td #{moment(s.Historials[0].fecha).format('DD/MM/YYYY HH:mm')}
                 td #{s.Historials[0].detalle}
                 td #{s.prioridad}
-                td #{moment(s.Historials[0].fecha).format('DD/MM/YYYY HH:mm')}
                 td #{s.estado}
                 td 
                   if (s.Historials[0].EmpleadoId)
                     | #{s.Historials[0].Empleado.nombre+" "+s.Historials[0].Empleado.apellido}
                   else
-                    |NO ATENDIDO
+                    | -
+                td
+                  if (s.estado == 'Pendiente')
+                    a(href="/empleado/solicitud/"+s.uuid) IR
+                  else
+                    if (user.id == s.Historials[0].EmpleadoId)
+                      a(href="/empleado/solicitud/"+s.uuid) IR
+                    else
+                      | -
 
 block datatable
   script(src="/javascripts/datatable.js")

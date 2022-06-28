@@ -34,8 +34,8 @@ module.exports = (sequelize, DataTypes) => {
       field: 'descripcion',
       validate: {
         len: {
-          args: [100, 1000],
-          msg: "La descripción debe contener entre 100 y 1000 caracteres"
+          args: [20, 1000],
+          msg: "La descripción debe contener entre 20 y 1000 caracteres"
         }
       }
     },
@@ -95,7 +95,7 @@ module.exports = (sequelize, DataTypes) => {
       field: 'estado',
       validate: {
         isIn: {
-          args: ['Pendiente', 'En proceso', 'Solucionado'],
+          args: [['Pendiente', 'En proceso', 'Solucionado']],
           msg: "El estado debe ser 'Pendiente', 'En proceso', o 'Solucionado'"
         }
       }

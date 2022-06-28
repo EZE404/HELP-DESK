@@ -51,6 +51,12 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
 
+    },
+    vista: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+      field: 'vista'
     }
   }, {});
 

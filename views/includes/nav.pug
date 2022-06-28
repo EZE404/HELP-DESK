@@ -2,22 +2,22 @@ if(user)
   if (user.type=="cliente")
     ul.nav.justify-content-center.p-2.bg-dark
       li.nav-item
-        a.nav-link.btn.btn-sm.btn-info(href='/cliente') Mis solicitudes
+        a.nav-link.btn.btn-sm.btn-outline-light(href='/cliente') Mis solicitudes
       li.nav-item
-        a.nav-link.btn.btn-sm.btn-info(href='/cliente/solicitud') Nueva solicitud
+        a.nav-link.btn.btn-sm.btn-outline-light(href='/cliente/solicitud') Nueva solicitud
   else if (user.AreaId == 3)
     ul.nav.justify-content-center.p-2.bg-dark
       li.nav-item
-        a.nav-link.btn.btn-sm.btn-info(href='/admin/areas') Areas
+        a.nav-link.btn.btn-sm.btn-outline-light(href='/admin/areas') Areas
       li.nav-item
-        a.nav-link.btn.btn-sm.btn-info(href='/admin/empleados') Empleados
+        a.nav-link.btn.btn-sm.btn-outline-light(href='/admin/empleados') Empleados
       li.nav-item
-        a.nav-link.btn.btn-sm.btn-info(href='/admin/clientes') Clientes
+        a.nav-link.btn.btn-sm.btn-outline-light(href='/admin/clientes') Clientes
   else if (user.AreaId == 2)
     ul.nav.justify-content-center.p-2.bg-dark
       li.nav-item
-        a.nav-link.btn.btn-sm.btn-info(href='/calidad/notificaciones') Notificaciones
+        a.nav-link.btn.btn-sm.btn-outline-light(href='/calidad/notificaciones') Notificaciones
   else
     ul.nav.justify-content-center.p-2.bg-dark
       li.nav-item
-        a.nav-link.btn.btn-sm.btn-info(href='/empleado') Solicitudes
+        a.nav-link.btn.btn-sm.btn-outline-light(href='/empleado') Solicitudes

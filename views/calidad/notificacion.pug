@@ -1,0 +1,44 @@
+extends ../layout
+block content
+  .container.p-5
+    .row
+      .col
+        h2.display4 Detalles de notificación
+          if (!noti.vista)
+            a.btn.btn-sm.btn-outline-primary.float-right(href="/calidad/notificaciones/"+noti.id+"/seen") Marcar como vista
+          else
+            a.btn.btn-sm.btn-outline-primary.float-right(href="/calidad/notificaciones/"+noti.id+"/seen") Marcar como no vista
+        hr
+    .row
+      .col.mx-auto
+        <div class="alert alert-info" role="alert">
+          p Detalle de notificación: #{noti.mensaje}
+          hr
+          <p>Descripción de solicitud</p>
+          <p>#{noti.Solicitud.descripcion}</p>
+          <hr>
+          <p class="mb-0">Ticket: #{noti.Solicitud.uuid}</p>
+          <p class="mb-0">Tipo: #{noti.Solicitud.tipo}</p>
+          <p class="mb-0">Estado: #{noti.Solicitud.estado}</p>
+          <p class="mb-0">Prioridad: #{noti.Solicitud.prioridad}</p>
+        </div>
+        hr
+    .row
+      .col.mx-auto
+        table#table_id
+          thead
+            tr
+              th(width="90px") Fecha
+              th Detalle
+              th(width="50px") Derivación
+              th(width="150px") Empleado
+          tbody
+            each h in noti.Solicitud.Historials
+              tr
+                td=moment(h.fecha).format('DD/MM/YYYY HH:mm')
+                td=h.detalle
+                td=h.derivacion ? "Sí" : "No"
+                td #{h.EmpleadoId ? h.Empleado.nombre+" "+h.Empleado.apellido : "-"}
+
+block datatable
+  script(src="/javascripts/datatable.js")
