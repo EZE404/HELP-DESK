@@ -12,8 +12,8 @@ La rama 'master' es solamente la plantilla inicial. El trabajo en sí, está en 
 8. http://localhost:3000
 9. LOG IN:
 
-Cliente => email: eze@correo.com, pass: Ezequiel99
-Admin => email: admin@correo.com, pass: Ezequiel99
-Calidad => email: mario@correo.com, pass: Ezequiel99
-HelpDesk => email: genaro@correo.com, pass: Ezequiel99
-Empleado => email: empleado@correo.com, pass: Ezequiel99
+- Cliente => email: eze@correo.com, pass: Ezequiel99
+- Admin => email: admin@correo.com, pass: Ezequiel99
+- Calidad => email: mario@correo.com, pass: Ezequiel99
+- HelpDesk => email: genaro@correo.com, pass: Ezequiel99
+- Empleado => email: empleado@correo.com, pass: Ezequiel99
