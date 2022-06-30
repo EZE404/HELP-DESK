@@ -6,9 +6,9 @@ block content
       .col-5.mx-auto.my-4
         .card
           .card-body.p-4
-            form(action="/cliente/tracking", method="post")
+            form(action="/tracking", method="post")
               .form-group
-                label(for="tracking") Código de rastreo
-                input.form-control#tracking(type="text", name="tracking", placeholder="Ingrese código de solicitud")
+                label(for="uuid") Código de rastreo
+                input.form-control#uuid(type="text", name="uuid", placeholder="Ingrese código de solicitud")
               .form-group.text-center
                 input.btn.btn-primary.text-center(type="submit", value="Consultar")

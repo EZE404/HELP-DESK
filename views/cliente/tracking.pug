@@ -23,13 +23,11 @@ block content
           thead
             tr
               th Fecha
-              th Área
               th Detalle
           tbody
             each h in solicitud.Historials
               tr
                 td(width="100px") #{moment(h.fecha).format('DD/MM/YYYY HH:mm')}
-                td(width="150px") #{solicitud.Area.nombre}
                 td #{h.detalle}
 
 block datatable

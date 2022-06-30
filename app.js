@@ -50,12 +50,16 @@ app.use("/admin", require("./routes/routerAdmin"));
 app.use('/calidad', require("./routes/routerCalidad"));
 app.use("/cliente", require("./routes/routerCliente"));
 app.use("/empleado", require("./routes/routerEmpleado"));
+app.use("/tracking", require("./routes/routerSolicitud"));
 
+//! VIEJO DISEÑO
 //app.use("/clientes", require("./routes/routerCliente"));
 //app.use("/solicitudes", require("./routes/routerSolicitud"));
 //app.use("/empleados", require("./routes/routerEmpleado"));
 //app.use("/areas", require("./routes/routerArea"));
-app.use("/validar", require('./routes/routerTestValidaciones')); //! SOLO PARA TESTEAR VALIDACIONES DE SEQUELIZE
+
+//! SOLO PARA TESTEAR VALIDACIONES DE SEQUELIZE
+//app.use("/validar", require('./routes/routerTestValidaciones')); 
 
 // CERRAR SESIÓN
 app.get('/close', async (req, res) => {
