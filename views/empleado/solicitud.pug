@@ -4,6 +4,7 @@ block content
     .row
       .col
         h2.display4 Atención de Solicitud
+          //if (!(solicitud.Areaid != user.AreaId) || !(solicitud.estado == "Solucionado"))
           if (solicitud.estado == "Pendiente")
             a.btn.btn-sm.btn-outline-primary.float-right(href="/empleado/solicitud/"+solicitud.uuid+"/take") Tomar solicitud
           if (solicitud.estado == "En proceso")
@@ -21,6 +22,7 @@ block content
           <p class="mb-0">Prioridad: #{solicitud.prioridad}</p>
         </div>
         hr
+    //if ((solicitud.Areaid != user.AreaId) || !(solicitud.estado == "Solucionado"))
     .row.align-items-start
       .col.mx-auto
         .card
@@ -35,12 +37,13 @@ block content
                         option(value=val selected=val == solicitud.prioridad) #{val}
                 .form-group
                   label.form-label(for="detalle") Detalle
-                  textarea.form-control#detalle(name="detalle" placeholder="Detalle" rows="6" minlength="100" maxlength="1000" required)
+                  textarea.form-control#detalle(name="detalle" placeholder="Detalle" rows="4" minlength="100" maxlength="1000" required)
                 .form-group
                   label(for="AreaId") Área
                   select.form-control#AreaId(name="AreaId")
                       each a in areas
-                        option(value=a.id, required, selected=a.id == solicitud.AreaId) #{a.nombre}
+                        if (a.id != 2 && a.id != 3 && a.id != solicitud.AreaId)
+                          option(value=a.id, required, selected=a.id == solicitud.AreaId) #{a.nombre}
                 .form-group.text-center
                   input.btn.btn-primary(type="submit" value="Transferir")
       .col.mx-auto
@@ -56,6 +59,7 @@ block content
                         option(value=val selected=val == solicitud.prioridad) #{val}
                 .form-group
                   label.form-label(for="detalle") Detalle
-                  textarea.form-control#detalle(name="detalle" placeholder="Detalle" rows="10" minlength="100" maxlength="1000" required)
+                  textarea.form-control#detalle(name="detalle" placeholder="Detalle" rows="8" minlength="100" maxlength="1000" required)
                 .form-group.text-center
                   input.btn.btn-primary(type="submit" value="Solucionar")
+    hr

@@ -29,6 +29,60 @@ async function getAllBySessionAreaId(id) {
   }
 }
 
+async function transfer(s, form, eId) {
+  try {
+    let newHistorial;
+    const { prioridad, detalle, AreaId } = form
+    const solicitud = s.set({
+      AreaId,
+      prioridad,
+      estado: "Pendiente"
+    }).save()
+
+    console.log("##### Solicitud save() ######")
+    console.log(solicitud);
+    if (solicitud) {
+      newHistorial = await Historial.create({
+        derivacion: true,
+        detalle,
+        EmpleadoId: eId,
+        SolicitudId: s.id
+      })
+    }
+
+    return newHistorial;
+  } catch (error) {
+    return error;
+  }
+}
+
+async function solve(s, form, eId) {
+  try {
+    let newHistorial;
+    const { prioridad, detalle } = form
+    const solicitud = s.set({
+      prioridad,
+      estado: "Solucionado"
+    }).save()
+
+    console.log("##### Solicitud save() ######")
+    console.log(solicitud);
+    if (solicitud) {
+      newHistorial = await Historial.create({
+        detalle,
+        EmpleadoId: eId,
+        SolicitudId: s.id
+      })
+    }
+
+    return newHistorial;
+  } catch (error) {
+    return error;
+  }
+}
+
 module.exports = {
-  getAllBySessionAreaId
+  getAllBySessionAreaId,
+  transfer,
+  solve
 }

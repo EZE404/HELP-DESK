@@ -61,7 +61,7 @@ router.get('/solicitud/:id', async (req, res) => {
   try {
     const areas = await controllerArea.getAll();
     const solicitud = await controllerSolicitud.getSolicitudByUuid(req.params.id);
-    console.log(solicitud)
+    //console.log(solicitud)
     return res.render('empleado/solicitud', {
     title: "Detalles de solicitud",
     user: req.session.user,
@@ -91,10 +91,70 @@ router.get('/solicitud/:uuid/untake', async (req, res) => {
     const soli = await controllerSolicitud.getSolicitudByUuid(req.params.uuid);
     const newHistorial = await controllerSolicitud.pending(soli.id, req.session.user.id);
 
+    if (newHistorial instanceof Error) {
+      throw newHistorial;
+    }
     //return res.json(newHistorial)
     return res.redirect('/empleado/solicitud/' + req.params.uuid);
   } catch (error) {
     return res.json(error)
+  }
+})
+
+router.post('/transferir/:uuid', async (req, res) => {
+  //return res.json(req.body);
+  try {
+    const solicitud = await controllerSolicitud.getSolicitudByUuid(req.params.uuid);
+    const newHistorial = await controllerHistorial.transfer(solicitud, req.body, req.session.user.id);
+
+    if (newHistorial instanceof Error) {
+      throw newHistorial
+    }
+
+    if (newHistorial) {
+      //return res.json(newHistorial);
+      return res.render('empleado/resultado', {
+        title: "Resultado",
+        user: req.session.user,
+        msg: "Solicitud transferida con éxito"
+      })
+    }
+  
+    return res.render('empleado/resultado', {
+      title: "Resultado",
+      user: req.session.user,
+      msg: "Solicitud no transferida :("
+    })
+  } catch (error) {
+    return res.json(error);
+  }
+})
+
+router.post('/solucionar/:uuid', async (req, res) => {
+  try {
+    const solicitud = await controllerSolicitud.getSolicitudByUuid(req.params.uuid);
+    const newHistorial = await controllerHistorial.solve(solicitud, req.body, req.session.user.id);
+
+    if (newHistorial instanceof Error) {
+      throw newHistorial
+    }
+
+    if (newHistorial) {
+      //return res.json(newHistorial);
+      return res.render('empleado/resultado', {
+        title: "Resultado",
+        user: req.session.user,
+        msg: "Solicitud finalizada con éxito"
+      })
+    }
+
+    return res.render('empleado/resultado', {
+      title: "Resultado",
+      user: req.session.user,
+      msg: "Solicitud no solucionada :("
+    })
+  } catch (error) {
+    return res.json(error);
   }
 })
 

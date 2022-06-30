@@ -195,7 +195,7 @@ async function getAllByClienteId(id) {
     }
 }
 
-async function pending(sId) {
+async function pending(sId, eId) {
     try {
         let newHistorial;
         const affectedRows = await Solicitud.update({
@@ -209,6 +209,7 @@ async function pending(sId) {
         if (affectedRows[0]) {
             newHistorial = await Historial.create({
                 detalle: "Liberada para ser atendida",
+                EmpleadoId: eId,
                 SolicitudId: sId
             })
         }
