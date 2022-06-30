@@ -174,7 +174,7 @@ async function crear(req, res) {
             msg: "Cuenta creada. Espere ser aprobado."
         })
     } catch (error) {
-        return res.status(500).json(error);
+        return res.json(error);
     }
 };
 
