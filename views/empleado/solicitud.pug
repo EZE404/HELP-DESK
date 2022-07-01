@@ -28,7 +28,7 @@ block content
         .card
           .card-body.p-4
             p.h4.text-center Transferir
-              form(action="/empleado/transferir/"+solicitud.uuid method="post")
+              form(action="/empleado/transferir/"+solicitud.uuid method="post" onsubmit="return validar()")
                 .form-group
                   label.form-label(for='prioridad') Prioridad
                   select.form-control(name='prioridad', id='prioridad' required)
@@ -38,6 +38,7 @@ block content
                 .form-group
                   label.form-label(for="detalle") Detalle
                   textarea.form-control#detalle(name="detalle" placeholder="Detalle" rows="4" minlength="100" maxlength="1000" required)
+                  span#testDetalle
                 .form-group
                   label(for="AreaId") Área
                   select.form-control#AreaId(name="AreaId")
@@ -50,7 +51,7 @@ block content
         .card
           .card-body.p-4
             p.h4.text-center Solucionar
-              form(action="/empleado/solucionar/"+solicitud.uuid method="post")
+              form(action="/empleado/solucionar/"+solicitud.uuid method="post" onsubmit="return validar2()")
                 .form-group
                   label.form-label(for='prioridad') Prioridad
                   select.form-control(name='prioridad', id='prioridad' required)
@@ -59,7 +60,9 @@ block content
                         option(value=val selected=val == solicitud.prioridad) #{val}
                 .form-group
                   label.form-label(for="detalle") Detalle
-                  textarea.form-control#detalle(name="detalle" placeholder="Detalle" rows="8" minlength="100" maxlength="1000" required)
+                  textarea.form-control#detalle2(name="detalle" placeholder="Detalle" rows="8" minlength="100" maxlength="1000" required)
+                  span#testDetalle2
                 .form-group.text-center
                   input.btn.btn-primary(type="submit" value="Solucionar")
     hr
+  script(src="/javascripts/solicitud.js") 

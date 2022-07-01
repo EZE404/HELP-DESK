@@ -5,7 +5,7 @@ block content
     .col-5.mx-auto.my-4
       .card
         .card-body.p-4
-          form(action="/cliente/solicitud" method="post")
+          form(action="/cliente/solicitud" method="post" onsubmit="return confirmar()")
             .form-group
               label.form-label(for='tipo') Tipo de Reclamo
               select.form-control(name='tipo', id='tipo' required)
@@ -17,3 +17,4 @@ block content
               textarea.form-control#descripcion(name="descripcion" placeholder="Descripción..." rows="10" minlength="100" maxlength="1000" required)
             .form-group.text-center
               input.btn.btn-primary(type="submit" value="Cargar Reclamo")
+  script(src="/javascripts/formSolicitud.js") 

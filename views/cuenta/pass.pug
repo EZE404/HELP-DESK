@@ -10,12 +10,15 @@ block content
     .col-5.mx-auto.my-4
       .card
         .card-body.p-4
-          form(action="/cuenta/pass" method="post")
+          form(action="/cuenta/pass" method="post" onsubmit="return validar()")
             .form-group
               label(for="password") Contraseña actual
               input.form-control#pass(type="password" name="pass" placeholder="Contraseña actual", required)
+              span#testPass
             .form-group
               label(for="password") Contraseña nueva
-              input.form-control#pass(type="newpass" name="newpass" placeholder="Contraseña nueva", required)
+              input.form-control#pass2(type="password" name="newpass" placeholder="Contraseña nueva", required)
+              span#testPass2
             .form-group.text-center
               input.btn.btn-primary(type="submit" value="Actualizar")
+  script(src="/javascripts/pass.js") 

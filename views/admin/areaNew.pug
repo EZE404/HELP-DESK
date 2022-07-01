@@ -10,10 +10,11 @@ block content
     .col-5.mx-auto.my-4
       .card
         .card-body.p-4
-          form(action="/admin/area/" method="post")
+          form(action="/admin/area/" method="post" onsubmit="return validar()")
             .form-check
               .form-group
                 label(for="nombre") Nombre
-                input.form-control#nombre(type="text" name="nombre" placeholder="Nombre", required)
+                input.form-control#nombre(type="text" name="nombre" placeholder="Nombre", minlength="3" maxlength="30" required)
             .form-group.text-center
               input.btn.btn-primary(type="submit" value="Crear")
+  script(src="/javascripts/areaNew.js") 

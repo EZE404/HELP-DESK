@@ -16,7 +16,7 @@ block content
             p DNI: #{client.dni}
             p TEL: #{client.telefono}
             p Fecha de Alta: #{moment(client.fechaAlta).format('DD/MM/YYYY HH:mm')}
-          form(action="/admin/clientes/"+client.uuid method="post")
+          form(action="/admin/clientes/"+client.uuid method="post" onsubmit="return confirmar()")
             .form-check
               - const valid = client.verificado ? true : false
               label.form-label(for="verificado") Habilitado
@@ -28,3 +28,4 @@ block content
               label.form-check-label(for="no") NO
             .form-group.text-center
               input.btn.btn-primary(type="submit" value="Actualizar")
+  script(src="/javascripts/cliente.js") 

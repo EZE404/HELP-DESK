@@ -10,25 +10,31 @@ block content
     .col-5.mx-auto.my-4
       .card
         .card-body.p-4
-          form(action="/admin/empleado" method="post")
+          form(action="/admin/empleado" method="post" onsubmit="return validar()")
             .form-group
               label(for="email") E-mail
               input.form-control#email(type="text" name="email" placeholder="E-mail", required)
+              span#testEmail
             .form-group
               label(for="pass") Contraseña
-              input.form-control#pass(type="password" name="pass" placeholder="Contraseña", required) 
+              input.form-control#pass(type="password" name="pass" placeholder="Contraseña", required)
+              span#testPass
             .form-group
               label(for="nombre") Nombre
               input.form-control#nombre(type="text" name="nombre" placeholder="Nombre", required)
+              span#testNombre
             .form-group
               label(for="apellido") Apellido
               input.form-control#apellido(type="text" name="apellido" placeholder="Apellido", required)
+              span#testApellido
             .form-group
               label(for="DNI") DNI
               input.form-control#dni(type="text" name="dni" placeholder="DNI", required)
+              span#testDni
             .form-group
               label(for="Teléfono") Teléfono
               input.form-control#telefono(type="text" name="telefono" placeholder="Teléfono", required)
+              span#testTelefono
             .form-group
               label(for="type") Área
               select.form-control#areaId(name="AreaId" required)
@@ -45,3 +51,4 @@ block content
 
             .form-group.text-center
               input.btn.btn-primary(type="submit" value="Registrar")
+  script(src="/javascripts/empleadoNew.js") 

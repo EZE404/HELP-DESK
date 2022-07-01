@@ -159,20 +159,7 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       }
-    },
-    admin: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: 0,
-      field: 'admin',
-      validate: {
-        validar(valor) {
-          if (typeof valor != 'boolean') {
-            throw new Error("Admin debe ser un booleano");
-          }
-        }
-      }
-    }   
+    }  
   }, {});
 
   Empleado.associate = (models) => {

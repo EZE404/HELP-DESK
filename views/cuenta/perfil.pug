@@ -4,15 +4,19 @@ block content
     .col-5.mx-auto.my-4
       .card
         .card-body.p-4
-          form(action="/cuenta" method="post")
+          form(action="/cuenta" method="post" onsubmit="return validar()")
             .form-group
               label(for="nombre") Nombre
               input.form-control#nombre(type="text" name="nombre" placeholder="Nombre", value=user.nombre required)
+              span#testNombre
             .form-group
               label(for="Teléfono") Teléfono
               input.form-control#telefono(type="text" name="telefono" placeholder="Teléfono" value=user.telefono required)
+              span#testTelefono
             .form-group
               label(for="email") Email
               input.form-control#email(type="text" name="email" placeholder="Email", value=user.email required)
+              span#testEmail
             .form-group.text-center
               input.btn.btn-primary(type="submit" value="Actualizar")
+  script(src="/javascripts/perfil.js") 

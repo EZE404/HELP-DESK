@@ -56,12 +56,7 @@ module.exports = {
           },
           key: 'id'
         },
-      },
-      admin: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
-      },
+      }
     }, {
       charset: "utf8",
       collate: "utf8_spanish_ci"

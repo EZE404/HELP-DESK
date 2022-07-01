@@ -13,19 +13,23 @@ block content
           .alert.alert-info(role="alert")
             p E-mail: #{empleado.email}
             p Fecha de Alta: #{moment(empleado.fechaAlta).format('DD/MM/YYYY HH:mm')}
-          form(action="/admin/empleados/"+empleado.id method="post")
+          form(action="/admin/empleados/"+empleado.id method="post" onsubmit="return validar()")
             .form-group
               label(for="nombre") Nombre
               input.form-control#nombre(type="text" name="nombre" placeholder="Nombre", value=empleado.nombre, required)
+              span#testNombre
             .form-group
               label(for="apellido") Apellido
               input.form-control#apellido(type="text" name="apellido" placeholder="Apellido", value=empleado.apellido, required)
+              span#testApellido
             .form-group
               label(for="DNI") DNI
               input.form-control#dni(type="text" name="dni" placeholder="DNI", value=empleado.dni, required)
+              span#testDni
             .form-group
               label(for="Teléfono") Teléfono
               input.form-control#telefono(type="text" name="telefono" placeholder="Teléfono", value=empleado.telefono required)
+              span#testTelefono
             .form-group
               label(for="type") Área
               select.form-control#areaId(name="AreaId")
@@ -43,3 +47,4 @@ block content
 
             .form-group.text-center
               input.btn.btn-primary(type="submit" value="Actualizar")
+  script(src="/javascripts/empleado.js") 
