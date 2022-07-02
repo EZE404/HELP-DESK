@@ -119,7 +119,7 @@ async function getClientByUuid(uuid) {
 async function crear(req, res) {
     console.log('Entró a función crear() de controllerCliente');
     console.log(req.body);
-    const { nombre, dni, email, telefono, pass } = req.body;
+    const { nombre, apellido, dni, email, telefono, pass } = req.body;
 
     if (!(email && pass)) {
         return res.status(400).send('ghola');
@@ -163,6 +163,7 @@ async function crear(req, res) {
         console.log('pasó hash', pass);
         const cliente_creado = await Cliente.create({
             nombre,
+            apellido,
             dni,
             email,
             telefono,

@@ -7,8 +7,8 @@ const email_exr = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z
 const email_test = document.getElementById('testEmail');
 const email = document.getElementById("email");
 
-email.addEventListener('input', (e) => {
-  let input = e.target.value.trim();
+function validarEmail(campo) {
+  let input = campo.value.trim();
   if (!input.match(email_exr) && input) {
     email_test.innerHTML = "<mark>Ingrese una dirección de correo válida</mark>"
     email_flag = false;
@@ -16,6 +16,10 @@ email.addEventListener('input', (e) => {
     email_test.innerHTML = ""
     email_flag = true;
   }
+}
+
+email.addEventListener('input', (e) => {
+  validarEmail(e.target);
 })
 
 // PASS
@@ -24,9 +28,9 @@ email.addEventListener('input', (e) => {
 const pass_test = document.getElementById('testPass');
 const pass = document.getElementById("pass");
 
-pass.addEventListener('input', (e) => {
-  let input = e.target.value.trim();
-  let inputSize = e.target.value.trim().length;
+function validarPass(campo) {
+  let input = campo.value.trim();
+  let inputSize = input.length;
 
   if ((inputSize > 64 || inputSize < 8) && input) {
     pass_test.innerHTML = "<mark>La contraseña debe tener entre 8 y 64 caracteres</mark>"
@@ -35,15 +39,23 @@ pass.addEventListener('input', (e) => {
     pass_test.innerHTML = ""
     pass_flag = true
   }
+}
+
+pass.addEventListener('input', (e) => {
+  validarPass(e.target);
 })
 
-function validar() {
-  const email_ok = (email_flag && email.value.trim()) ? true : false;
-  const pass_ok = (pass_flag && pass.value.trim()) ? true : false;
+// VALIDAR FORM
 
-  if (email_ok && pass_ok) {
-    return true;
+function validar() {
+
+  validarEmail(email);
+  validarPass(pass);
+
+  if(email_flag && pass_flag) {
+    return true
   }
+
   alert("Revisa los campos");
   return false;
 }

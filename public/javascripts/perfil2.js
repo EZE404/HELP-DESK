@@ -2,10 +2,8 @@
 
 let nombre_flag = false;
 let apellido_flag = false;
-let dni_flag = false;
 let tel_flag = false;
 let email_flag = false;
-let pass_flag = false;
 
 // NOMBRE
 
@@ -24,7 +22,6 @@ function validarNombre(campo) {
     nombre_flag = true;
   }
 }
-
 nombre.addEventListener('input', (e) => {
   validarNombre(e.target);
 })
@@ -51,28 +48,6 @@ apellido.addEventListener('input', (e) => {
   validarApellido(e.target);
 })
 
-// DNI
-
-const dni_exr = /^[0-9]*$/g
-const dni_test = document.getElementById('testDni');
-const dni = document.getElementById("dni");
-
-function validarDni(campo) {
-  let input = campo.value.trim();
-  let inputSize = input.length;
-  if (((inputSize > 10 || inputSize < 8) || !input.match(dni_exr)) && input) {
-    dni_test.innerHTML = "<mark>El DNI solo puede contener números y tener entre 8 y 10 dígitos</mark>"
-    dni_flag = false;
-  } else {
-    dni_test.innerHTML = ""
-    dni_flag = true;
-  }
-}
-
-dni.addEventListener('input', (e) => {
-  validarDni(e.target);
-})
-
 // TELEFONO
 
 const tel_exr = /^[0-9]*$/g
@@ -81,7 +56,7 @@ const tel = document.getElementById("telefono");
 
 function validarTelefono(campo) {
   let input = campo.value.trim();
-  let inputSize = input.length;
+  let inputSize = campo.value.trim().length;
   if (((inputSize > 14 || inputSize < 10) || !input.match(tel_exr)) && input) {
     tel_test.innerHTML = "<mark>El teléfono solo puede contener números y tener entre 10 y 14 dígitos</mark>"
     tel_flag = false;
@@ -116,40 +91,16 @@ email.addEventListener('input', (e) => {
   validarEmail(e.target);
 })
 
-// PASS
-
-//const pass_exr = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,64}$/g
-const pass_test = document.getElementById('testPass');
-const pass = document.getElementById("pass");
-
-function validarPass(campo) {
-  let input = campo.value.trim();
-  let inputSize = campo.length;
-  if ((inputSize > 64 || inputSize < 8) && input) {
-    pass_test.innerHTML = "<mark>La contraseña debe tener entre 8 y 64 caracteres</mark>"
-    pass_flag = false;
-  } else {
-    pass_test.innerHTML = ""
-    pass_flag = true
-  }
-}
-
-pass.addEventListener('input', (e) => {
-  validarPass(e.target);
-})
-
 // VALIDAR FORM
 
 function validar() {
 
   validarNombre(nombre);
   validarApellido(apellido);
-  validarDni(dni);
   validarTelefono(tel);
   validarEmail(email);
-  validarPass(pass);
-  
-  if (nombre_flag && apellido_flag && dni_flag && tel_flag && email_flag && pass_flag) {
+
+  if (nombre_flag && apellido_flag && tel_flag && email_flag) {
     return confirm("Confirmar");
   }
 
