@@ -14,6 +14,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      apellido: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       dni: {
         type: Sequelize.STRING,
         allowNull: false,

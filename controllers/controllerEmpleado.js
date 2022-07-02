@@ -199,6 +199,7 @@ async function updateEmpl(form) {
     try {
         const updatedRows = await Empleado.update({
             nombre: form.nombre,
+            apellido: form.apellido,
             telefono: form.telefono,
             email: form.email
         },

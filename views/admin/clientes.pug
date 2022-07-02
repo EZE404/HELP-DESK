@@ -22,7 +22,7 @@ block content
             each c in clientes
               tr
                 td
-                  a(href="/admin/clientes/"+c.uuid) #{c.nombre}
+                  a(href="/admin/clientes/"+c.uuid) #{c.nombre+" "+c.apellido}
                 td #{c.dni}
                 td #{c.email}
                 td #{c.telefono}

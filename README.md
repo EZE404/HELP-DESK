@@ -20,10 +20,11 @@
 | HelpDesk | genaro@correo.com | Ezequiel99
 | Empleado | empleado@correo.com | Ezequiel99
 
+***
 ### Esquemas DB (Sequelize Generated)
-- Clientes(++id++, nombre, apellido, email, pass, telefono, dni, fecha_alta, verificado, uuid)
-- Empleados(++id++, nombre, apellido, email, pass, telefono, dni, fecha_alta, verificado, AreaId)
-- Areas(++id++, nombre, activa, editable)
-- Solicituds(++id++, tipo, descripcion, uuid, fecha_alta, prioridad, estado, ClienteId, AreaId)
-- Historials(++id++, detalle, fecha, derivado, EmpleadoId, SolicitudId)
-- Notificacions(++id++, mensaje, fecha, vista, SolicitudId)
+- Clientes(`id`, nombre, apellido, email, pass, telefono, dni, fecha_alta, verificado, uuid)
+- Empleados(`id`, nombre, apellido, email, pass, telefono, dni, fecha_alta, verificado, **_AreaId_**)
+- Areas(`id`, nombre, activa, editable)
+- Solicituds(`id`, tipo, descripcion, uuid, fecha_alta, prioridad, estado, **_ClienteId_**, **_AreaId_**)
+- Historials(`id`, detalle, fecha, derivado, **_EmpleadoId_**, **_SolicitudId_**)
+- Notificacions(`id`, mensaje, fecha, vista, **_SolicitudId_**)

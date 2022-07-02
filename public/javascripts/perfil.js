@@ -1,6 +1,7 @@
 // FLAGS
 
 let nombre_flag = false;
+let apellido_flag = false;
 let tel_flag = false;
 let email_flag = false;
 
@@ -19,6 +20,24 @@ nombre.addEventListener('input', (e) => {
   } else {
     nombre_test.innerHTML = ""
     nombre_flag = true;
+  }
+})
+
+// APELLIDO
+
+//const apellido_exp = new RegExp(/^[a-zA-ZÀ-ÿ]+([\s][a-zA-ZÀ-ÿ]+)*$/, 'g');
+const apellido_exr = /^[a-zA-ZÀ-ÿ]+([\s][a-zA-ZÀ-ÿ]+)*$/g;
+const apellido_test = document.getElementById('testApellido');
+const apellido = document.getElementById("apellido");
+
+apellido.addEventListener('input', (e) => {
+  let input = e.target.value.trim();
+  if (!input.match(apellido_exr) && input) {
+    apellido_test.innerHTML = "<mark>El apellido solo puede contener letras y sin espacios dobles</mark>"
+    apellido_flag = false;
+  } else {
+    apellido_test.innerHTML = ""
+    apellido_flag = true;
   }
 })
 
@@ -59,10 +78,11 @@ email.addEventListener('input', (e) => {
 
 function validar() {
   const nombre_ok = (nombre_flag && nombre.value.trim()) ? true : false;
+  const apellido_ok = (apellido_flag && apellido.value.trim()) ? true : false;
   const tel_ok = (tel_flag && tel.value.trim()) ? true : false;
   const email_ok = (email_flag && email.value.trim()) ? true : false;
 
-  if (nombre_ok && tel_ok && email_ok) {
+  if (nombre_ok && apellido_ok && tel_ok && email_ok) {
     return confirm("Confirmar");
   }
   alert("Revisa los campos");

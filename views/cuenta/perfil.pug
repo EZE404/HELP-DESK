@@ -10,6 +10,10 @@ block content
               input.form-control#nombre(type="text" name="nombre" placeholder="Nombre", value=user.nombre required)
               span#testNombre
             .form-group
+              label(for="apellido") Apellido
+              input.form-control#apellido(type="text" name="apellido" placeholder="Apellido", value=user.apellido required)
+              span#testApellido
+            .form-group
               label(for="Teléfono") Teléfono
               input.form-control#telefono(type="text" name="telefono" placeholder="Teléfono" value=user.telefono required)
               span#testTelefono

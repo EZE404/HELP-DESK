@@ -34,6 +34,26 @@ module.exports = (sequelize, DataTypes) => {
       }
       //--------------------------------
     },
+    apellido: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: 'apellido',
+      //--------- VALIDACION ----------
+      validate: {
+        notNull: {
+          msg: "El apellido no puede ser nulo"
+        },
+        notEmpty: {
+          args: true,
+          msg: "El apellido no puede estar vacío"
+        },
+        is: {
+          args: /^[a-zA-ZÀ-ÿ]+([\s][a-zA-ZÀ-ÿ]+)*$/g,
+          msg: "El apellido solo puede contener letras sin espacios dobles, ni espacios al principio y fin"
+        }
+      }
+      //--------------------------------
+    },
     //############### DNI #################
     dni: {
       type: DataTypes.STRING,
