@@ -1,6 +1,6 @@
-# HELPDESK
+## HELPDESK
 
-La rama 'master' es solamente la plantilla inicial. El trabajo en sí, está en la rama 'ezequiel'.
+> La rama 'master' es solamente la plantilla inicial. El trabajo en sí, está en la rama 'ezequiel'.
 
 1. git clone https://github.com/EZE404/help_desk.git
 2. cd help_desk && npm install
@@ -12,8 +12,18 @@ La rama 'master' es solamente la plantilla inicial. El trabajo en sí, está en 
 8. http://localhost:3000
 9. LOG IN:
 
-- Cliente => email: eze@correo.com, pass: Ezequiel99
-- Admin => email: admin@correo.com, pass: Ezequiel99
-- Calidad => email: mario@correo.com, pass: Ezequiel99
-- HelpDesk => email: genaro@correo.com, pass: Ezequiel99
-- Empleado => email: empleado@correo.com, pass: Ezequiel99
+| rol | email | pass |
+| ------ | ------ | ------ |
+| Cliente | eze@correo.com | Ezequiel99
+| Admin | admin@correo.com | Ezequiel99
+| Calidad | mario@correo.com | Ezequiel99
+| HelpDesk | genaro@correo.com | Ezequiel99
+| Empleado | empleado@correo.com | Ezequiel99
+
+### Esquemas DB (Sequelize Generated)
+- Clientes(++id++, nombre, apellido, email, pass, telefono, dni, fecha_alta, verificado, uuid)
+- Empleados(++id++, nombre, apellido, email, pass, telefono, dni, fecha_alta, verificado, AreaId)
+- Areas(++id++, nombre, activa, editable)
+- Solicituds(++id++, tipo, descripcion, uuid, fecha_alta, prioridad, estado, ClienteId, AreaId)
+- Historials(++id++, detalle, fecha, derivado, EmpleadoId, SolicitudId)
+- Notificacions(++id++, mensaje, fecha, vista, SolicitudId)
