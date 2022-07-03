@@ -10,11 +10,12 @@ block content
         table#table_id
           thead
             tr
-              th(width="30px") VER
+              th(width="25px") VER
               th Mensaje
               th(width="90px") Fecha
               th(width="50px") Prioridad
               th Estado
+              th Tipo
               th Vista
           tbody
             each n in notificaciones
@@ -25,6 +26,7 @@ block content
                 td #{moment(n.fecha).format('DD/MM/YYYY HH:mm')}
                 td #{n.Solicitud.prioridad}
                 td #{n.Solicitud.estado}
+                td #{n.tipo}
                 td=n.vista ? "Sí" : "No"
 
 block datatable

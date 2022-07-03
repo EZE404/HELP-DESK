@@ -33,6 +33,10 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false
+      },
+      tipo: {
+        type: Sequelize.STRING,
+        allowNull: true,
       }
     }, {
       charset: "utf8",

@@ -50,13 +50,17 @@ module.exports = (sequelize, DataTypes) => {
           msg: "El mensaje debe contener entre 100 y 1000 caracteres"
         }
       }
-
     },
     vista: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
       field: 'vista'
+    },
+    tipo: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: 'tipo',
     }
   }, {});
 
