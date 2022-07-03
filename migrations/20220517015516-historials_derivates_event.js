@@ -2,12 +2,13 @@
 
 const event_name = "historials_derivates"
 const derivates_event = `
-CREATE EVENT historials_derivates
-ON SCHEDULE EVERY 1 MINUTE
-STARTS '2021-08-02 00:04:39.000'
-ON COMPLETION NOT PRESERVE
-ENABLE
-DO BEGIN
+CREATE EVENT ${event_name}
+	ON SCHEDULE
+		EVERY 1 MINUTE STARTS '2021-08-02 00:04:39'
+	ON COMPLETION PRESERVE
+	ENABLE
+	COMMENT 'solicitud derivada 4 veces'
+	DO BEGIN
   DECLARE hay TINYINT DEFAULT TRUE;
   DECLARE ids INTEGER;
   DECLARE cant INTEGER;
@@ -39,10 +40,10 @@ DO BEGIN
       IF (cant > 2) THEN
         BEGIN
             SELECT COUNT(*) INTO existe FROM notificacions
-            WHERE SolicitudId = ids AND fecha = fecha_cur;
+            WHERE SolicitudId = ids AND fecha = fecha_cur AND tipo = "4 derivaciones";
             IF (existe = 0) THEN
-                INSERT INTO notificacions (SolicitudId, fecha, mensaje)
-                VALUES(ids, fecha_cur, CONCAT('4 DERIVATES EVENT: ',msg));
+                INSERT INTO notificacions (SolicitudId, fecha, mensaje, tipo)
+                VALUES(ids, fecha_cur, msg, "4 derivaciones");
             END IF;
         END;
       END IF;

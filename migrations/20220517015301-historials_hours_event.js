@@ -3,11 +3,12 @@
 const event_name = "historials_hours"
 const hours_event = `
 CREATE EVENT ${event_name}
-ON SCHEDULE EVERY 1 MINUTE
-STARTS '2021-08-02 02:43:28.000'
-ON COMPLETION NOT PRESERVE
-ENABLE
-DO BEGIN
+	ON SCHEDULE
+		EVERY 1 MINUTE STARTS '2021-08-02 02:43:28'
+	ON COMPLETION PRESERVE
+	ENABLE
+	COMMENT 'solicitud con 36hs sin movimientos'
+	DO BEGIN
   DECLARE hay TINYINT DEFAULT TRUE;
   DECLARE ids INTEGER;
   DECLARE fecha_cur DATETIME;
@@ -21,7 +22,7 @@ DO BEGIN
       GROUP BY SolicitudId
       ) a NATURAL JOIN historials hls
       INNER JOIN solicituds sds ON hls.SolicitudId = sds.id
-  WHERE estado != 'Resuelto'
+  WHERE estado != 'Solucionado'
   AND prioridad = 'ALTA'
   AND TIMESTAMPDIFF(MINUTE, fecha, current_timestamp) > 36*60;
       
@@ -35,9 +36,9 @@ DO BEGIN
     END IF;
     FETCH resultado INTO ids, msg, fecha_cur;
     SELECT COUNT(*) INTO existe FROM notificacions
-    WHERE SolicitudId = ids AND fecha = fecha_cur;
+    WHERE SolicitudId = ids AND fecha = fecha_cur AND tipo = "36hs inactiva";
     IF (existe = 0) THEN
-        INSERT INTO notificacions (SolicitudId, fecha, mensaje) VALUES(ids, fecha_cur, CONCAT('36HS EVENT: ', msg));
+        INSERT INTO notificacions (SolicitudId, fecha, mensaje, tipo) VALUES(ids, fecha_cur, msg, "36hs inactiva");
     END IF;
   END LOOP;
   CLOSE resultado;

@@ -3,11 +3,12 @@
 const event_name = "historials_days"
 const days_event = `
 CREATE EVENT ${event_name}
-ON SCHEDULE EVERY 1 MINUTE
-STARTS '2021-08-02 04:02:43.000'
-ON COMPLETION NOT PRESERVE
-ENABLE
-DO BEGIN
+	ON SCHEDULE
+		EVERY 1 MINUTE STARTS '2021-08-02 04:02:43'
+	ON COMPLETION PRESERVE
+	ENABLE
+	COMMENT 'solicitud con 15 días sin solucionarse'
+	DO BEGIN
   DECLARE hay TINYINT DEFAULT TRUE;
   DECLARE ids INTEGER;
   DECLARE fecha_cur DATETIME;
@@ -25,9 +26,10 @@ DO BEGIN
     GROUP BY SolicitudId
     ) b INNER JOIN historials h
     ON b.SolicitudId = h.SolicitudId
+    INNER JOIN solicituds std ON b.SolicitudId = std.id
     AND b.fecha_max = h.fecha
-  WHERE TIMESTAMPDIFF(MINUTE, fecha_min, current_time()) > 15*24*60
-  AND estado != 'Resuelto';
+  WHERE TIMESTAMPDIFF(MINUTE, fecha_min, CURRENT_TIME()) > 7*24*60
+  AND estado != 'Solucionado';
       
   DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SELECT 1+1;
   DECLARE CONTINUE HANDLER FOR NOT FOUND SET hay = FALSE;
@@ -39,9 +41,9 @@ DO BEGIN
     END IF;
     FETCH resultado INTO ids, fecha_cur, msg;
     SELECT COUNT(*) INTO existe FROM notificacions
-    WHERE SolicitudId = ids AND fecha = fecha_cur;
+    WHERE SolicitudId = ids AND fecha = fecha_cur AND tipo = "15 días sin resolver";
     IF (existe = 0) THEN
-        INSERT INTO notificacions (SolicitudId, fecha, mensaje) VALUES(ids, fecha_cur, CONCAT('15 DAYS EVENT: ', msg));
+        INSERT INTO notificacions (SolicitudId, fecha, mensaje, tipo) VALUES(ids, fecha_cur, msg, "15 días sin resolver");
     END IF;
   END LOOP;
   CLOSE resultado;
