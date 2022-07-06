@@ -5,18 +5,6 @@ const clg = require('../tools/clg');
 /* GET home page. */
 router.get('/', async function (req, res) {
 
-  // Acá debería controlar el tipo de rol y derivar a /admin, /empleado, o /cliente
-/*   if (req.session.user) {
-    clg.objeto(req.session.user);
-    const solicitudes = await require('../controllers/controllerSolicitud').getByClienteId(req.session.user.id);
-    res.render('index', {
-      title: "Inicio",
-      type: req.session.type,
-      user: req.session.user,
-      auth: true,
-      solicitudes
-    }); */
-
   if(req.session.user) {
     console.log("EN EL CHEQUEO DE USUARIO (HAY SESSION.USER)")
 
@@ -44,7 +32,7 @@ router.get('/', async function (req, res) {
     console.log("EN EL ELSE DE HOST/ (NO HAY USER)")
 
     // Acá debería renderizar un index con tracking por código de solicitud
-    return res.render('home');
+    return res.render('home', {title: "Inicio"});
     //res.redirect('/login');
   
   }

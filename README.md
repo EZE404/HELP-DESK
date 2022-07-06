@@ -15,10 +15,10 @@
 | rol | email | pass |
 | ------ | ------ | ------ |
 | Cliente | eze@correo.com | Ezequiel99
+| Cliente | sosa@correo.com | Ezequiel99
 | Admin | admin@correo.com | Ezequiel99
 | Calidad | mario@correo.com | Ezequiel99
 | HelpDesk | genaro@correo.com | Ezequiel99
-| Empleado | empleado@correo.com | Ezequiel99
 
 ***
 ### Esquemas DB (Sequelize Generated)

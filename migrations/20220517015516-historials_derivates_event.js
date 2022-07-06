@@ -37,7 +37,7 @@ CREATE EVENT ${event_name}
       LEAVE bucle;
     END IF;
     FETCH resultado INTO ids, msg, fecha_cur, cant;
-      IF (cant > 2) THEN
+      IF (cant > 3) THEN
         BEGIN
             SELECT COUNT(*) INTO existe FROM notificacions
             WHERE SolicitudId = ids AND fecha = fecha_cur AND tipo = "4 derivaciones";

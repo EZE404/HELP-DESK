@@ -21,7 +21,11 @@ router.post("/", async (req, res) => {
             })
         }
 
-        return res.send("no se encontró soli");
+        //return res.send("no se encontró soli");
+        return res.render('home', {
+            title: "Inicio",
+            msg: "No se encontró solicitud con código "+req.body.uuid
+        })
     } catch (error) {
         return res.json(error);
     }

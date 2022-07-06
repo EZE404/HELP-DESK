@@ -9,7 +9,8 @@ module.exports = {
       dni: '40666777',
       email: 'sosa@correo.com',
       pass: await bcrypt.hash('Ezequiel99', 10),
-      telefono: '1180805001'
+      telefono: '1180805001',
+      uuid: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
     }], {});
   },
 

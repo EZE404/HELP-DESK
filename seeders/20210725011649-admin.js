@@ -9,11 +9,10 @@ module.exports = {
       nombre: 'Ezequiel',
       apellido: 'Albornoz',
       dni: '36227970',
-      email: 'eze@correo.com',
+      email: 'admin@correo.com',
       pass: await bcrypt.hash('Ezequiel99', 10),
       telefono: '1123917575',
-      AreaId: 3,
-      admin: 1
+      AreaId: 3
     }], {});
   },
 
