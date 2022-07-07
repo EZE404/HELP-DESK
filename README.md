@@ -22,6 +22,9 @@
 
 ***
 ### Esquemas DB (Sequelize Generated)
+
+> Los archivos de diagramas están en carpeta MySQL
+
 - Clientes=(`id`, nombre, apellido, email, pass, telefono, dni, fecha_alta, verificado, uuid)
 - Empleados=(`id`, nombre, apellido, email, pass, telefono, dni, fecha_alta, verificado, **_AreaId_**)
 - Areas=(`id`, nombre, activa, editable)
